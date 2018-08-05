@@ -1,0 +1,28 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>Home</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+ <ion-list>
+  <ion-item>
+    <ion-label floating >Ingrese Ususario</ion-label>
+    <ion-input #firstName></ion-input>
+  </ion-item>
+   <ion-item>
+    <ion-label floating >Ingrese Apellido</ion-label>
+    <ion-input  #lastName></ion-input>
+  </ion-item>
+  <button ion-button color="secondary" [disabled]="!lastName.value ||  !firstName.value"
+  (click)="newUser(lastName.value,firstName.value)" > OK </button>
+  <hr>
+   <ion-item *ngFor="let user of users" >
+     <p>{{user.firstName}}</p>
+     <p>{{user.lastName}}</p>
+     <p>{{user.email}}</p>
+     <button item-end  ion-button color="danger" (click)="deleted(user._id)" >Borrar</button>
+     <button item-end  ion-button (click)="edit(user._id, lastName.value,firstName.value)"  >Editar</button>
+   </ion-item>
+ </ion-list>
+</ion-content>
