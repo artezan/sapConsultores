@@ -14,7 +14,7 @@
     <ion-label floating >Ingrese Apellido</ion-label>
     <ion-input  #lastName></ion-input>
   </ion-item>
-  <button ion-button color="secondary" [disabled]="!lastName.value ||  !firstName.value"
+  <button ion-button color="dark" [disabled]="!lastName.value ||  !firstName.value"
   (click)="newUser(lastName.value,firstName.value)" > OK </button>
   <hr>
    <ion-item *ngFor="let user of users" >
