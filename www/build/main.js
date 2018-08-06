@@ -63,7 +63,7 @@ var TabsPage = /** @class */ (function () {
         this.tab3Root = __WEBPACK_IMPORTED_MODULE_2__contact_contact__["a" /* ContactPage */];
     }
     TabsPage = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({template:/*ion-inline-start:"E:\Ghost Games\documentos\nodeDemo\vps\sapConsultores\myApp\src\pages\tabs\tabs.html"*/'<ion-tabs>\n  <ion-tab [root]="tab1Root" tabTitle="Home" tabIcon="home"></ion-tab>\n  <ion-tab [root]="tab2Root" tabTitle="About" tabIcon="information-circle"></ion-tab>\n  <ion-tab [root]="tab3Root" tabTitle="Contact" tabIcon="contacts"></ion-tab>\n</ion-tabs>\n'/*ion-inline-end:"E:\Ghost Games\documentos\nodeDemo\vps\sapConsultores\myApp\src\pages\tabs\tabs.html"*/
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({template:/*ion-inline-start:"C:\demo\src\pages\tabs\tabs.html"*/'<ion-tabs>\n  <ion-tab [root]="tab1Root" tabTitle="Home" tabIcon="home"></ion-tab>\n  <ion-tab [root]="tab2Root" tabTitle="About" tabIcon="information-circle"></ion-tab>\n  <ion-tab [root]="tab3Root" tabTitle="Contact" tabIcon="contacts"></ion-tab>\n</ion-tabs>\n'/*ion-inline-end:"C:\demo\src\pages\tabs\tabs.html"*/
         }),
         __metadata("design:paramtypes", [])
     ], TabsPage);
@@ -98,7 +98,7 @@ var AboutPage = /** @class */ (function () {
     }
     AboutPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-about',template:/*ion-inline-start:"E:\Ghost Games\documentos\nodeDemo\vps\sapConsultores\myApp\src\pages\about\about.html"*/'<ion-header>\n  <ion-navbar>\n    <ion-title>\n      About\n    </ion-title>\n  </ion-navbar>\n</ion-header>\n\n<ion-content padding>\n\n</ion-content>\n'/*ion-inline-end:"E:\Ghost Games\documentos\nodeDemo\vps\sapConsultores\myApp\src\pages\about\about.html"*/
+            selector: 'page-about',template:/*ion-inline-start:"C:\demo\src\pages\about\about.html"*/'<ion-header>\n  <ion-navbar>\n    <ion-title>\n      About\n    </ion-title>\n  </ion-navbar>\n</ion-header>\n\n<ion-content padding>\n\n</ion-content>\n'/*ion-inline-end:"C:\demo\src\pages\about\about.html"*/
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["d" /* NavController */]])
     ], AboutPage);
@@ -133,7 +133,7 @@ var ContactPage = /** @class */ (function () {
     }
     ContactPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-contact',template:/*ion-inline-start:"E:\Ghost Games\documentos\nodeDemo\vps\sapConsultores\myApp\src\pages\contact\contact.html"*/'<ion-header>\n  <ion-navbar>\n    <ion-title>\n      Contact\n    </ion-title>\n  </ion-navbar>\n</ion-header>\n\n<ion-content>\n  <ion-list>\n    <ion-list-header>Follow us on Twitter</ion-list-header>\n    <ion-item>\n      <ion-icon name="ionic" item-start></ion-icon>\n      @ionicframework\n    </ion-item>\n  </ion-list>\n</ion-content>\n'/*ion-inline-end:"E:\Ghost Games\documentos\nodeDemo\vps\sapConsultores\myApp\src\pages\contact\contact.html"*/
+            selector: 'page-contact',template:/*ion-inline-start:"C:\demo\src\pages\contact\contact.html"*/'<ion-header>\n  <ion-navbar>\n    <ion-title>\n      Contact\n    </ion-title>\n  </ion-navbar>\n</ion-header>\n\n<ion-content>\n  <ion-list>\n    <ion-list-header>Follow us on Twitter</ion-list-header>\n    <ion-item>\n      <ion-icon name="ionic" item-start></ion-icon>\n      @ionicframework\n    </ion-item>\n  </ion-list>\n</ion-content>\n'/*ion-inline-end:"C:\demo\src\pages\contact\contact.html"*/
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["d" /* NavController */]])
     ], ContactPage);
@@ -212,7 +212,7 @@ var HomePage = /** @class */ (function () {
     };
     HomePage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-home',template:/*ion-inline-start:"E:\Ghost Games\documentos\nodeDemo\vps\sapConsultores\myApp\src\pages\home\home.html"*/'<ion-header>\n  <ion-navbar>\n    <ion-title>Home</ion-title>\n  </ion-navbar>\n</ion-header>\n\n<ion-content padding>\n <ion-list>\n  <ion-item>\n    <ion-label floating >Ingrese Ususario</ion-label>\n    <ion-input #firstName></ion-input>\n  </ion-item>\n   <ion-item>\n    <ion-label floating >Ingrese Apellido</ion-label>\n    <ion-input  #lastName></ion-input>\n  </ion-item>\n  <button ion-button color="dark" [disabled]="!lastName.value ||  !firstName.value"\n  (click)="newUser(lastName.value,firstName.value)" > OK </button>\n  <hr>\n   <ion-item *ngFor="let user of users" >\n     <p>{{user.firstName}}</p>\n     <p>{{user.lastName}}</p>\n     <p>{{user.email}}</p>\n     <button item-end  ion-button color="danger" (click)="deleted(user._id)" >Borrar</button>\n     <button item-end  ion-button (click)="edit(user._id, lastName.value,firstName.value)"  >Editar</button>\n   </ion-item>\n </ion-list>\n</ion-content>\n'/*ion-inline-end:"E:\Ghost Games\documentos\nodeDemo\vps\sapConsultores\myApp\src\pages\home\home.html"*/
+            selector: 'page-home',template:/*ion-inline-start:"C:\demo\src\pages\home\home.html"*/'<ion-header>\n  <ion-navbar color="danger">\n    <ion-title>Home</ion-title>\n  </ion-navbar>\n</ion-header>\n\n<ion-content padding>\n <ion-list>\n  <ion-item>\n    <ion-label floating >Ingrese Ususario</ion-label>\n    <ion-input #firstName></ion-input>\n  </ion-item>\n   <ion-item>\n    <ion-label floating >Ingrese Apellido</ion-label>\n    <ion-input  #lastName></ion-input>\n  </ion-item>\n  <button ion-button color="danger" [disabled]="!lastName.value ||  !firstName.value"\n  (click)="newUser(lastName.value,firstName.value)" > OK </button>\n  <hr>\n   <ion-item *ngFor="let user of users" >\n     <p>{{user.firstName}}</p>\n     <p>{{user.lastName}}</p>\n     <p>{{user.email}}</p>\n     <button item-end  ion-button color="danger" (click)="deleted(user._id)" >Borrar</button>\n     <button item-end  ion-button (click)="edit(user._id, lastName.value,firstName.value)"  >Editar</button>\n   </ion-item>\n </ion-list>\n</ion-content>\n'/*ion-inline-end:"C:\demo\src\pages\home\home.html"*/
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["d" /* NavController */], __WEBPACK_IMPORTED_MODULE_2__angular_common_http__["a" /* HttpClient */]])
     ], HomePage);
@@ -346,7 +346,7 @@ var MyApp = /** @class */ (function () {
         });
     }
     MyApp = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({template:/*ion-inline-start:"E:\Ghost Games\documentos\nodeDemo\vps\sapConsultores\myApp\src\app\app.html"*/'<ion-nav [root]="rootPage"></ion-nav>\n'/*ion-inline-end:"E:\Ghost Games\documentos\nodeDemo\vps\sapConsultores\myApp\src\app\app.html"*/
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({template:/*ion-inline-start:"C:\demo\src\app\app.html"*/'<ion-nav [root]="rootPage"></ion-nav>\n'/*ion-inline-end:"C:\demo\src\app\app.html"*/
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["e" /* Platform */], __WEBPACK_IMPORTED_MODULE_2__ionic_native_status_bar__["a" /* StatusBar */], __WEBPACK_IMPORTED_MODULE_3__ionic_native_splash_screen__["a" /* SplashScreen */]])
     ], MyApp);
