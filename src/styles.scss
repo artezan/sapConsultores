@@ -1,0 +1,92 @@
+/* You can add global styles to this file, and also import other style files */
+@import './grid-css/bootstrap-grid.css';
+$mdc-theme-primary: #1565c0; // change primary color example
+$mdc-theme-secondary: #9fa8da;
+// change secondary color example
+@import '~@angular-mdc/theme/material';
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  overflow-y: hidden;
+}
+.tooltip-size {
+  font-size: 1em;
+}
+.secondary-color {
+  background-color: #9fa8da;
+}
+.chips-font {
+  font-size: 0.8em;
+}
+.btn {
+  margin-left: 1% !important;
+}
+.toogle-btns {
+  text-align: right;
+  margin-right: 1%;
+  margin-top: 2%;
+  margin-bottom: -2%;
+}
+.btn2 {
+  margin: 5px !important;
+}
+.toogle-btns2 {
+  position: fixed;
+  top: auto;
+  bottom: 0%;
+  z-index: 3;
+  text-align: center !important;
+  display: flex;
+  flex-wrap: wrap;
+  padding-right: 5%;
+  padding-left: 30%;
+}
+.space-buttons {
+  min-height: 100px !important;
+}
+
+@media (max-width: 800px) {
+  .mat-chip-list-wrapper {
+    display: inherit !important;
+    flex-direction: column;
+    /* flex-wrap: wrap; */
+    align-items: center;
+    margin: -4px;
+  }
+  .space-buttons {
+    min-height: 100px !important;
+  }
+  .btn {
+    -webkit-order: inherit;
+  }
+  .toogle-btns {
+    position: fixed;
+    top: auto;
+    /* right: 2%; */
+    bottom: 0%;
+    z-index: 999;
+    text-align: center !important;
+    display: flex;
+    flex-wrap: wrap;
+    padding: 5%;
+    // justify-content: space-around;
+  }
+}
+@media (max-height: 480px) {
+  .toogle-btns {
+    position: fixed;
+    top: 100%;
+    /* right: 2%; */
+    bottom: 0%;
+    z-index: -1;
+    text-align: center !important;
+    display: flex;
+    flex-wrap: wrap;
+    padding: 5%;
+    // justify-content: space-around;
+  }
+}

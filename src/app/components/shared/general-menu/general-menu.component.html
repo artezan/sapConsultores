@@ -1,0 +1,85 @@
+<mat-sidenav-container class="sidenav-container">
+  <mat-sidenav #drawer class="sidenav" fixedInViewport="true" [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
+    [mode]="(isHandset$ | async) ? 'over' : 'side'" [opened]="openMenu">
+    <mat-toolbar color="primary" class="menu-title">{{typeUser}}</mat-toolbar>
+    <mat-toolbar color="primary" class="menu-box">
+      <div>Nombre</div>
+      <small>correo@algo.com</small>
+    </mat-toolbar>
+    <div class="menu-user">
+      <img class="avatar" src="../../../../assets/user-logo.png" alt="">
+    </div>
+    <div style="min-height: 50px !important;"></div>
+    <mat-nav-list>
+      <a class="a-activate" [ngClass]="{'a-active': menuSelect === 'tickets'}" mat-list-item routerLink="/list-condo" (click)="close()">Tickets</a>
+      <a [ngClass]="{'a-active': menuSelect === 'departamento'}" (click)="close()" mat-list-item routerLink="/list-depa">Departamentos</a>
+      <a [ngClass]="{'a-active': menuSelect === 'propietarios'}" (click)="close()" mat-list-item routerLink="/list-propietaries">Propietarios</a>
+      <a [ngClass]="{'a-active': menuSelect === 'inquilinos'}" (click)="close()" mat-list-item routerLink="/list-renter">Inquilinos</a>
+      <hr>
+      <a [ngClass]="{'a-active': menuSelect === 'proveedores'}" (click)="close()" mat-list-item routerLink="/list-providers">Proveedores</a>
+      <a [ngClass]="{'a-active': menuSelect === 'servicios'}" (click)="close()" mat-list-item routerLink="/list-services">Servicios</a>
+      <a [ngClass]="{'a-active': menuSelect === 'adeudo'}" (click)="close()" mat-list-item routerLink="/new-debit">Nuevo adeudo</a>
+      <hr>
+
+      <a [ngClass]="{'a-active': menuSelect === 'ingresos'}" (click)="close()" mat-list-item routerLink="/list-ingress">Ingresos
+      </a>
+      <a [ngClass]="{'a-active': menuSelect === 'egresos'}" (click)="close()" mat-list-item routerLink="/list-egress">Egresos </a>
+      <hr>
+
+      <a [ngClass]="{'a-active': menuSelect === 'reports'}" (click)="close()" mat-list-item routerLink="/new-reports">Reportes </a>
+
+    </mat-nav-list>
+
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <mat-toolbar color="primary" [class.mat-elevation-z8]=true class="top-bar">
+      <div class="col-sm-8" style="padding: 1% !important; ">
+        <div class="row align-items-center justify-content-start">
+          <div>
+            <button type="button" aria-label="Toggle sidenav" mat-icon-button (click)="drawer.toggle()" *ngIf="(isHandset$ | async) && (!isHide) ">
+              <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+            </button>
+          </div>
+
+          <div>
+            <span>SapConsultores</span>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-2">
+        <div class="row align-items-center justify-content-end" style="text-align: right">
+          <div>
+            <button mat-icon-button *ngIf="!isHideExit">
+              <mat-icon (click)="logout()">exit_to_app</mat-icon>
+            </button>
+          </div>
+          <div (click)="logout()" *ngIf="!isHideExit">Salir</div>
+        </div>
+      </div>
+    </mat-toolbar>
+    <ng-content></ng-content>
+  </mat-sidenav-content>
+</mat-sidenav-container>
+
+
+<!--
+<mat-sidenav-container class="sidenav-container">
+  <mat-sidenav #drawer class="sidenav" fixedInViewport="true" [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
+    [mode]="(isHandset$ | async) ? 'over' : 'side'" [opened]="!(isHandset$ | async)">
+    <mat-toolbar color="primary">Menu</mat-toolbar>
+    <mat-nav-list>
+      <a mat-list-item href="#">Link 1</a>
+      <a mat-list-item href="#">Link 2</a>
+      <a mat-list-item href="#">Link 3</a>
+    </mat-nav-list>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <mat-toolbar color="primary">
+      <button type="button" aria-label="Toggle sidenav" mat-icon-button (click)="drawer.toggle()" *ngIf="isHandset$ | async">
+        <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+      </button>
+      <span>Application Title</span>
+    </mat-toolbar>
+    <ng-content></ng-content>
+  </mat-sidenav-content>
+</mat-sidenav-container> -->
