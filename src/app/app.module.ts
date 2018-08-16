@@ -36,6 +36,7 @@ import {
   MatProgressSpinnerModule,
   MatDividerModule
 } from '@angular/material';
+import { CdkTableModule } from '@angular/cdk/table';
 // component
 import { GeneralMenuComponent } from './components/shared/general-menu/general-menu.component';
 import { LoginComponent } from './components/user/login/login.component';
@@ -46,6 +47,16 @@ import { TicketsAdmComponent } from './components/admin/tickets-adm/tickets-adm.
 // import { ApiTokenInterceptor } from './_config/api-jwt-interceptor';
 // mdc web
 import { MdcFabModule, MdcMenuModule, MdcIconModule } from '@angular-mdc/web';
+// component
+import { TicketsCustomerComponent } from './components/customer/tickets-customer/tickets-customer.component';
+import { TicketsConsultantComponent } from './components/consultant/tickets-consultant/tickets-consultant.component';
+import { GeneralTableComponent } from './components/shared/general-table/general-table.component';
+import { TicketNewAdmComponent } from './components/admin/ticket-new-adm/ticket-new-adm.component';
+import { GeneralTicketPostComponent } from './components/shared/general-ticket-post/general-ticket-post.component';
+import { ListCustomerAdmComponent } from './components/admin/list-customer-adm/list-customer-adm.component';
+import { NewCustomerAdmComponent } from './components/admin/new-customer-adm/new-customer-adm.component';
+import { NewConsultantAdmComponent } from './components/admin/new-consultant-adm/new-consultant-adm.component';
+import { ListConsultantAdmComponent } from './components/admin/list-consultant-adm/list-consultant-adm.component';
 
 // npm
 
@@ -58,7 +69,16 @@ import { MdcFabModule, MdcMenuModule, MdcIconModule } from '@angular-mdc/web';
     NewUserComponent,
     GeneralDialogComponent,
     GeneralAlertComponent,
-    TicketsAdmComponent
+    TicketsAdmComponent,
+    TicketsCustomerComponent,
+    TicketsConsultantComponent,
+    GeneralTableComponent,
+    TicketNewAdmComponent,
+    GeneralTicketPostComponent,
+    ListCustomerAdmComponent,
+    NewCustomerAdmComponent,
+    NewConsultantAdmComponent,
+    ListConsultantAdmComponent
   ],
   imports: [
     BrowserModule,
@@ -96,7 +116,8 @@ import { MdcFabModule, MdcMenuModule, MdcIconModule } from '@angular-mdc/web';
     MatDividerModule,
     MdcFabModule,
     MdcMenuModule,
-    MdcIconModule
+    MdcIconModule,
+    CdkTableModule
   ],
   providers: [
     /* {

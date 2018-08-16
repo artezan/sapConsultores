@@ -1,0 +1,59 @@
+table {
+  width: 100%;
+}
+
+td,
+th {
+  width: 25%;
+}
+
+.customWidthClass {
+  flex: 0 0 6%
+}
+
+.red-icon {
+  color: red;
+}
+
+.green-icon {
+  color: green;
+}
+
+.yellow-icon {
+  size: 1px !important;
+  color: goldenrod;
+}
+
+.flexbox-ranking {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.margin-ranking {
+  margin-right: 3px;
+  margin-left: 3px;
+}
+
+.center-cell {
+  justify-content: center;
+}
+
+.chip-yellow {
+  background-color: #FFE57F
+}
+
+.chip-green {
+  background-color: #B9F6CA;
+}
+
+.chip-black {
+  background-color: #546E7A;
+  color: white;
+}
+
+.tag {
+  background-color: blue;
+  color: white;
+  border-radius: 25%
+}

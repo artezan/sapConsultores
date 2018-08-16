@@ -1,0 +1,46 @@
+<div class="container">
+  <mat-card-title class="title-margin">
+    Clientes
+  </mat-card-title>
+  <div *ngIf="isLoading; then loader else table"></div>
+  <!-- loader -->
+  <ng-template #loader>
+    <div style="display: flex; justify-content: center;">
+      <div>
+        <mat-spinner></mat-spinner>
+      </div>
+    </div>
+  </ng-template>
+  <!-- tabla -->
+  <ng-template #table>
+    <!-- botones export -->
+    <div class="toogle-btns col">
+      <button mat-raised-button (click)="pdf()" id="edit" class="btn" class="secondary-color">PDF</button>
+      <button mat-raised-button (click)='excel()' class="btn secondary-color">Excel</button>
+    </div>
+    <!-- tabla general -->
+    <app-general-table [columns]="columns" [rows]="rows" (editButton)="edit($event)" (deletedButton)="deleted($event)" [showFilterByStatus]=false></app-general-table>
+
+    <!-- Resumen -->
+    <mat-card [class.mat-elevation-z0]="true" class="border-sumary">
+      <mat-card-title>
+        Resumen
+      </mat-card-title>
+
+      <mat-card-content>
+        <mat-chip-list>
+          <mat-chip class="secondary-color" selected>Horas Totales: {{totalHours}}</mat-chip>
+          <mat-chip class="secondary-color">Horas Promedio Por Cliente: {{averageHours.toFixed(2)}}</mat-chip>
+        </mat-chip-list>
+      </mat-card-content>
+
+    </mat-card>
+  </ng-template>
+</div>
+<div class="space-buttons"></div>
+
+
+<button (click)="newCustomer()" class="mdc-fab mdc-fab--extended app-fab--absolute">
+  <span class="material-icons mdc-fab__icon">add</span>
+  <span class="mdc-fab__label">Nuevo</span>
+</button>

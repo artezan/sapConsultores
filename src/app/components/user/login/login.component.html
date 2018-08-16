@@ -6,13 +6,28 @@
           <span>Bricks App</span>
         </mat-toolbar> -->
         <img src="../../../../assets/logoExample.png" width="250">
+        <div class="row">
+          <div class="col" style="margin-bottom: 3%;">
+            <mat-radio-group [(ngModel)]="typeOfUser" name="user" class="box-type-user">
+              <mat-radio-button value="company">Administrador</mat-radio-button>
+              <mat-radio-button value="customer">Cliente</mat-radio-button>
+              <mat-radio-button value="consultant">Consultor</mat-radio-button>
+            </mat-radio-group>
+          </div>
+        </div>
+        <div *ngIf="!isFind" style="margin-top: 2%">
+          <span class="alert alert-danger ">
+            Error usuario y/o contraseña inválido
+          </span>
+
+        </div>
         <p>
           <mat-form-field appearance="outline">
-            <mat-label>Email</mat-label>
-            <input matInput placeholder="Correo" [(ngModel)]="emailInput" #email="ngModel" id="email" name="email" required>
+            <mat-label>Usuario</mat-label>
+            <input matInput placeholder="Nombre" [(ngModel)]="emailInput" #email="ngModel" id="email" name="email" required>
             <mat-icon matSuffix color="primary">account_circle
             </mat-icon>
-            <mat-error *ngIf="email.dirty || email.touched">Anotar Email</mat-error>
+            <mat-error *ngIf="email.dirty || email.touched">Anotar Usuario</mat-error>
           </mat-form-field>
         </p>
         <p>
@@ -25,7 +40,7 @@
         </p>
         <div align="end">
           <mat-card-actions>
-            <button mat-raised-button color="primary" (click)="login()">Ingresar</button>
+            <button style="width: 100%;" mat-raised-button color="primary" (click)="login()">Ingresar</button>
           </mat-card-actions>
         </div>
       </mat-card>

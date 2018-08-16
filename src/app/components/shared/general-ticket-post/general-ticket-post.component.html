@@ -1,0 +1,84 @@
+<mat-toolbar color="primary" [class.mat-elevation-z2]=true>
+  <span>Historial</span>
+</mat-toolbar>
+<div *ngIf="isLoaded; then ticket else loader"></div>
+<ng-template #loader>
+  <div style="display: flex; justify-content: center;">
+    <div>
+      <mat-spinner></mat-spinner>
+    </div>
+  </div>
+</ng-template>
+<ng-template #ticket>
+  <div id="post">
+    <div class="container">
+      <div class="table-margins">
+        <table>
+
+          <tr>
+            <th>Cliente</th>
+            <th>Consultor</th>
+            <th>Ranking</th>
+            <th>Estado</th>
+          </tr>
+          <tr>
+            <!-- MODIFICAR -->
+            <td>{{ticketObj.customer.name}}</td>
+            <td>{{ticketObj.consultant.name}}</td>
+            <td>{{ticketObj.ranking}}</td>
+            <td>{{ticketObj.status}}</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+    <!-- Post -->
+    <div *ngIf="posts.length === 0; then noPost else historyPost"></div>
+    <ng-template #noPost>
+      <div class="container" style="margin-top: 3%">
+        <mat-card>
+          <div style="text-align: center">
+            <mat-card-title>No hay historial de este Ticket</mat-card-title>
+          </div>
+
+        </mat-card>
+      </div>
+    </ng-template>
+    <ng-template #historyPost>
+      <div class="page">
+        <div class="page__demo">
+          <div class="main-container page__container">
+            <div class="timeline">
+              <span class="timeline__year">Inicio</span>
+              <br>
+
+              <div class="timeline__box" *ngFor="let post of posts">
+                <div class="timeline__date">
+                  <span class="timeline__day">{{geDay(post.timestamp)}}</span>
+                  <span class="timeline__month">{{geMonth(post.timestamp)}}</span>
+                </div>
+                <div class="timeline__post">
+                  <div class="timeline__content">
+                    <b *ngIf="post.isByCustomer" class="title1">Cliente</b>
+                    <b *ngIf="!post.isByCustomer" class="title1">Consultor</b>
+                    <p *ngIf="post.title" class="title2">{{post.title}}</p>
+                    <p>{{post.content}}</p>
+                  </div>
+                </div>
+              </div>
+              <!-- MODIFICAR -->
+
+              <span class="timeline__end">{{ticketObj.status}}</span>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-template>
+
+  </div>
+  <button *ngIf="userType === 'company'" (click)="pdf()" class="mdc-fab mdc-fab--extended app-fab--absolute">
+    <span class="material-icons mdc-fab__icon">cloud_download</span>
+    <span class="mdc-fab__label">Descargar</span>
+  </button>
+
+</ng-template>

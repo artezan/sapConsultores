@@ -1,0 +1,121 @@
+<mat-card [class.mat-elevation-z0]="true" class="border-filter">
+  <mat-card-title>Filtros</mat-card-title>
+  <div class="row">
+    <mat-form-field style="margin-right: 1%" appearance="fill">
+      <mat-label>Buscar en toda la tabla </mat-label>
+      <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Buscar...">
+    </mat-form-field>
+
+    <mat-form-field style="margin-right: 1%" appearance="fill">
+      <mat-label>Buscar por Dia </mat-label>
+      <input matInput (keyup)="filterByDay($event.target.value)" placeholder="Buscar...">
+    </mat-form-field>
+    <mat-form-field style="margin-right: 1%; " appearance="fill">
+      <mat-label>Buscar por Mes </mat-label>
+      <mat-select #m (valueChange)="filterByMonth(m.value)" placeholder="Buscar por Mes">
+        <mat-option *ngFor="let month of months; index as i" [value]="i">
+          {{month}}
+        </mat-option>
+      </mat-select>
+      <button mat-button *ngIf="m.value" matSuffix mat-icon-button aria-label="Clear" (click)="m.value='';filterByMonth(undefined)">
+        <mat-icon>close</mat-icon>
+      </button>
+    </mat-form-field>
+    <mat-form-field appearance="fill" style="margin-right: 1%; ">
+      <mat-label style="top: 10px">Buscar por Año </mat-label>
+      <input matInput (keyup)="filterByYear($event.target.value)" placeholder="Buscar...">
+    </mat-form-field>
+    <mat-form-field *ngIf="showFilterByStatus" style="  max-width: 17%; " appearance="fill">
+      <mat-label>Buscar por Estado </mat-label>
+      <mat-select #state (valueChange)="filterByState(state.value)" placeholder="Buscar por Estado">
+        <mat-option value="Atendiendo">
+          Atendiendo
+        </mat-option>
+        <mat-option value="Cerrado">
+          Cerrado
+        </mat-option>
+        <mat-option value="Pendiente">
+          Pendiente
+        </mat-option>
+      </mat-select>
+      <button mat-button *ngIf="state.value" matSuffix mat-icon-button aria-label="Clear" (click)="state.value='';filterByState(undefined)">
+        <mat-icon>close</mat-icon>
+      </button>
+    </mat-form-field>
+  </div>
+
+
+</mat-card>
+<br>
+<div class="mat-elevation-z8">
+  <table mat-table [dataSource]="dataSource" matSort>
+    <ng-container *ngFor="let column of columns" [cdkColumnDef]="column.prop">
+      <mat-header-cell class="center-cell" mat-sort-header [ngClass]="{customWidthClass: column.w } " *cdkHeaderCellDef>{{ column.name }}</mat-header-cell>
+      <span *ngIf="column.type === 'normal'">
+        <mat-cell class="center-cell" [ngClass]="{customWidthClass: column.w } " *cdkCellDef="let row">{{ row[column.prop] }}</mat-cell>
+      </span>
+      <span *ngIf="column.type === 'date'">
+        <mat-cell class="center-cell" [ngClass]="{customWidthClass: column.w }" *cdkCellDef="let row">{{formatDates(row[column.prop])}}</mat-cell>
+      </span>
+      <span *ngIf="column.type === 'status'">
+        <mat-cell class="center-cell chip" [ngClass]="{customWidthClass: column.w } " *cdkCellDef="let row">
+          <mat-chip-list>
+            <mat-chip (click)="onSelect(row)" [ngClass]="{
+              'chip-yellow': row[column.prop] === 'Pendiente', 
+              'chip-green': row[column.prop] === 'Atendiendo',
+              'chip-black': row[column.prop] === 'Cerrado' 
+          }">{{ row[column.prop] }}</mat-chip>
+          </mat-chip-list>
+
+        </mat-cell>
+      </span>
+      <span *ngIf="column.type === 'boolean'">
+        <mat-cell class="center-cell" [ngClass]="{customWidthClass: column.w }" *cdkCellDef="let row">
+          <span class="margin-ranking ">
+            <button *ngIf="row[column.prop]" (click)="onSelect(row)" mat-icon-button>
+              <mat-icon class="secondary-text" class="green-icon">check_circle</mat-icon>
+            </button>
+            <button *ngIf="!row[column.prop]" (click)="onSelect(row)" mat-icon-button>
+              <mat-icon class="secondary-text" class="red-icon">cancel</mat-icon>
+            </button>
+          </span>
+        </mat-cell>
+      </span>
+      <span *ngIf="column.type === 'ranking'">
+        <mat-cell [ngClass]="{customWidthClass: column.w }" class="margin-ranking" *cdkCellDef="let row">
+          <div class="flexbox-ranking">
+            <span *ngIf="row[column.prop] > 0">
+              <mat-icon *ngFor="let starts of getArray(row[column.prop])" class="secondary-text" class="yellow-icon">star_rate</mat-icon>
+            </span>
+            <span *ngIf="row[column.prop] === 0">
+              Sin calificar
+            </span>
+          </div>
+        </mat-cell>
+      </span>
+      <span *ngIf="column.type === 'money'">
+        <mat-cell class="center-cell" [ngClass]="{customWidthClass: column.w } " *cdkCellDef="let row"> $ {{ row[column.prop].toFixed(2) }}</mat-cell>
+      </span>
+      <span *ngIf="column.type === 'buttons'">
+        <mat-cell [ngClass]="{customWidthClass: column.w }" *cdkCellDef="let row" style="justify-content: center;">
+          <div class="flexbox-ranking">
+            <button mat-icon-button matTooltip="Detalles" matTooltipPosition="above" color="primary" *ngIf="column.buttonDetails" (click)="detailsItem(row)">
+              <mat-icon class="secondary-text">info</mat-icon>
+            </button>
+            <button mat-icon-button color="primary" matTooltip="Editar" matTooltipPosition="above" *ngIf="column.buttonEdit" (click)="editItem(row)">
+              <mat-icon class="secondary-text">create</mat-icon>
+            </button>
+            <button mat-icon-button color="warn" matTooltip="Borrar" matTooltipPosition="above" *ngIf="column.buttonDeleted" (click)="deletedItem(row)">
+              <mat-icon class="secondary-text">delete</mat-icon>
+            </button>
+          </div>
+        </mat-cell>
+      </span>
+    </ng-container>
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+  </table>
+
+  <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" [pageSize]="10"></mat-paginator>
+</div>
+<br>

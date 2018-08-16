@@ -1,39 +1,40 @@
 <mat-sidenav-container class="sidenav-container">
   <mat-sidenav #drawer class="sidenav" fixedInViewport="true" [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
     [mode]="(isHandset$ | async) ? 'over' : 'side'" [opened]="openMenu">
-    <mat-toolbar color="primary" class="menu-title">{{typeUser}}</mat-toolbar>
-    <mat-toolbar color="primary" class="menu-box">
+    <mat-toolbar color="primary" class="menu-title" *ngIf="typeUser === 'company'">Administrador</mat-toolbar>
+    <mat-toolbar color="primary" class="menu-title" *ngIf="typeUser === 'customer'">Cliente</mat-toolbar>
+    <mat-toolbar color="primary" class="menu-title" *ngIf="typeUser === 'consultant'">Consultor</mat-toolbar>
+    <mat-toolbar *ngIf="typeUser === 'customer' || typeUser === 'consultant'" color="primary" class="menu-box">
       <div>Nombre</div>
-      <small>correo@algo.com</small>
+      <small *ngIf="typeUser === 'customer'">correo@algo.com</small>
     </mat-toolbar>
-    <div class="menu-user">
+    <div class="menu-user" *ngIf="typeUser === 'customer'">
       <img class="avatar" src="../../../../assets/user-logo.png" alt="">
     </div>
-    <div style="min-height: 50px !important;"></div>
-    <mat-nav-list>
-      <a class="a-activate" [ngClass]="{'a-active': menuSelect === 'tickets'}" mat-list-item routerLink="/list-condo" (click)="close()">Tickets</a>
-      <a [ngClass]="{'a-active': menuSelect === 'departamento'}" (click)="close()" mat-list-item routerLink="/list-depa">Departamentos</a>
-      <a [ngClass]="{'a-active': menuSelect === 'propietarios'}" (click)="close()" mat-list-item routerLink="/list-propietaries">Propietarios</a>
-      <a [ngClass]="{'a-active': menuSelect === 'inquilinos'}" (click)="close()" mat-list-item routerLink="/list-renter">Inquilinos</a>
-      <hr>
-      <a [ngClass]="{'a-active': menuSelect === 'proveedores'}" (click)="close()" mat-list-item routerLink="/list-providers">Proveedores</a>
-      <a [ngClass]="{'a-active': menuSelect === 'servicios'}" (click)="close()" mat-list-item routerLink="/list-services">Servicios</a>
-      <a [ngClass]="{'a-active': menuSelect === 'adeudo'}" (click)="close()" mat-list-item routerLink="/new-debit">Nuevo adeudo</a>
+    <div *ngIf="typeUser === 'customer'" style="min-height: 50px !important;"></div>
+    <!-- admin -->
+    <mat-nav-list *ngIf="typeUser === 'company'">
+      <a [ngClass]="{'a-active': menuSelect === 'tickets'}" mat-list-item routerLink="/tickets-adm" (click)="close()">Tickets</a>
+      <a [ngClass]="{'a-active': menuSelect === 'customers'}" mat-list-item routerLink="/list-customers-adm" (click)="close()">Clientes</a>
+      <a [ngClass]="{'a-active': menuSelect === 'consultants'}" mat-list-item routerLink="/list-consultants-adm" (click)="close()">Consultores</a>
       <hr>
 
-      <a [ngClass]="{'a-active': menuSelect === 'ingresos'}" (click)="close()" mat-list-item routerLink="/list-ingress">Ingresos
-      </a>
-      <a [ngClass]="{'a-active': menuSelect === 'egresos'}" (click)="close()" mat-list-item routerLink="/list-egress">Egresos </a>
-      <hr>
+    </mat-nav-list>
+    <!-- consultant -->
+    <mat-nav-list *ngIf="typeUser === 'consultant'">
+      <a [ngClass]="{'a-active': menuSelect === 'tickets'}" mat-list-item routerLink="/tickets-adm" (click)="close()">Tickets</a>
 
-      <a [ngClass]="{'a-active': menuSelect === 'reports'}" (click)="close()" mat-list-item routerLink="/new-reports">Reportes </a>
+    </mat-nav-list>
+    <!-- customer -->
+    <mat-nav-list *ngIf="typeUser === 'customer'">
+      <a [ngClass]="{'a-active': menuSelect === 'tickets'}" mat-list-item routerLink="/tickets-adm" (click)="close()">Tickets</a>
 
     </mat-nav-list>
 
   </mat-sidenav>
   <mat-sidenav-content>
     <mat-toolbar color="primary" [class.mat-elevation-z8]=true class="top-bar">
-      <div class="col-sm-8" style="padding: 1% !important; ">
+      <div class="col-8" style="padding: 1% !important; ">
         <div class="row align-items-center justify-content-start">
           <div>
             <button type="button" aria-label="Toggle sidenav" mat-icon-button (click)="drawer.toggle()" *ngIf="(isHandset$ | async) && (!isHide) ">
@@ -53,7 +54,7 @@
               <mat-icon (click)="logout()">exit_to_app</mat-icon>
             </button>
           </div>
-          <div (click)="logout()" *ngIf="!isHideExit">Salir</div>
+          <div (click)="logout()" *ngIf="!isHideExit ">Salir</div>
         </div>
       </div>
     </mat-toolbar>

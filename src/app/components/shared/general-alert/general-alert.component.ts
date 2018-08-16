@@ -13,8 +13,6 @@ export class GeneralAlertComponent implements OnInit {
     header: string;
     subHeader?: string;
     body: string;
-    isform?: boolean;
-    bodyForm?: string;
     hideButtonCancel?: boolean;
   };
   constructor(
@@ -24,8 +22,6 @@ export class GeneralAlertComponent implements OnInit {
       header: string;
       subHeader?: string;
       body: string;
-      isform?: boolean;
-      bodyForm?: string;
       hideButtonCancel?: boolean;
     }
   ) {
@@ -35,11 +31,7 @@ export class GeneralAlertComponent implements OnInit {
     this.dialogRef.close();
   }
   buttonsResponse(options: string) {
-    if (this.dataInput.isform) {
-      this.buttons.emit({options: options, message: this.message});
-    } else {
-      this.buttons.emit(options);
-    }
+    this.buttons.emit(options);
   }
 
   ngOnInit() {}

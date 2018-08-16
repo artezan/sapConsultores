@@ -1,0 +1,110 @@
+<mat-toolbar color="primary" [class.mat-elevation-z2]=true>
+  <span>Nuevo Ticket</span>
+</mat-toolbar>
+<div class="container" style="margin-top: 3%">
+  <form #newUserForm="ngForm">
+    <mat-card>
+      <mat-card-title>Complete los campos</mat-card-title>
+      <div class="flex-container">
+        <!-- Costo -->
+        <mat-form-field appearance="outline">
+          <mat-label>Costo</mat-label>
+          <input matInput type="number" placeholder="" [(ngModel)]="ticket.cost" #cost="ngModel" id="cost" name="cost" required>
+          <mat-error *ngIf="cost.dirty || cost.touched">Anotar Costo</mat-error>
+        </mat-form-field>
+        <!-- hours -->
+        <mat-form-field appearance="outline">
+          <mat-label>Horas</mat-label>
+          <input matInput type="number" [(ngModel)]="ticket.hours" #hours="ngModel" id="hours" name="hours" required>
+          <mat-error *ngIf="hours.dirty || hours.touched">Anotar Horas</mat-error>
+        </mat-form-field>
+        <!-- description -->
+        <mat-form-field appearance="outline">
+          <mat-label>Descripción o Servicio</mat-label>
+          <input matInput [(ngModel)]="ticket.description" #description="ngModel" id="description" name="description" required>
+          <mat-error *ngIf="description.dirty || description.touched">Anotar Servicio</mat-error>
+        </mat-form-field>
+
+        <!-- customer -->
+
+        <mat-form-field appearance="outline">
+          <mat-label>Cliente (opcional)</mat-label>
+          <mat-select [(ngModel)]="ticket.customerId" #customer="ngModel" id="customer" name="customer">
+            <span *ngFor="let customer of customers$ | async ">
+              <mat-option [value]="customer._id">
+                {{customer.name}}
+              </mat-option>
+            </span>
+
+          </mat-select>
+          <button mat-button *ngIf="customer.value" matSuffix mat-icon-button aria-label="Clear" (click)="ticket.customerId = undefined">
+            <mat-icon>close</mat-icon>
+          </button>
+
+
+
+        </mat-form-field>
+        <!-- consultant -->
+        <mat-form-field appearance="outline">
+          <mat-label>Consultor (opcional)</mat-label>
+          <mat-select [(ngModel)]="ticket.consultantId" #consultant="ngModel" id="consultant" name="consultant">
+            <span *ngFor="let consultant of consultants$ | async ">
+              <mat-option [value]="consultant._id">
+                {{consultant.name}} {{ consultant.lastName}}
+              </mat-option>
+            </span>
+
+          </mat-select>
+          <button mat-button *ngIf="consultant.value" matSuffix mat-icon-button aria-label="Clear" (click)="ticket.consultantId = undefined">
+            <mat-icon>close</mat-icon>
+          </button>
+
+
+        </mat-form-field>
+        <!-- Status -->
+        <mat-form-field *ngIf="!isNew" appearance="outline">
+          <mat-label>Estado </mat-label>
+          <mat-select [(ngModel)]="ticket.status" #status="ngModel" id="status" name="status">
+            <mat-option value="Atendiendo">
+              Atendiendo
+            </mat-option>
+            <mat-option value="Cerrado">
+              Cerrado
+            </mat-option>
+            <mat-option value="Pendiente">
+              Pendiente
+            </mat-option>
+
+          </mat-select>
+        </mat-form-field>
+        <!-- isPay -->
+        <mat-form-field *ngIf="!isNew" appearance="outline">
+          <mat-label>Pagado </mat-label>
+          <mat-select [(ngModel)]="ticket.isPay" #isPay="ngModel" id="isPay" name="isPay">
+            <mat-option [value]=true>
+              Si
+            </mat-option>
+            <mat-option [value]=false>
+              No
+            </mat-option>
+
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <mat-card-actions align="end">
+        <div style="margin-right: 2%">
+          <span [matTooltip]=errorToShow [matTooltipClass]="'tooltip-size'" (mouseenter)="getPopMessage($event)">
+            <button *ngIf="isNew" id="submitUser" mat-raised-button color="primary" (click)="newTicket()" [disabled]="!newUserForm.form.valid">Crear</button>
+            <button *ngIf="!isNew" id="submitUser" mat-raised-button color="primary" (click)="editTicket()">Editar</button>
+          </span>
+        </div>
+        <div>
+          <button mat-raised-button color="warn" routerLink="/tickets-adm">Cancelar</button>
+        </div>
+
+      </mat-card-actions>
+
+    </mat-card>
+  </form>
+
+</div>

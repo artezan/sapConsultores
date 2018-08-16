@@ -24,7 +24,7 @@ export class ControllerMenuService {
    * @param hideMenu ocultar menu
    * @param hideExit ocultar salir
    * @param selectSection seleccionar seccion
-   * @param typeUser typo de usuario
+   * @param typeUser tipo de usuario
    */
   menuSettings(
     hideMenu: boolean,

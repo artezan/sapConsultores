@@ -1,8 +1,47 @@
-<p>
-  tickets-adm works!
-</p>
+<div class="container">
+  <mat-card-title class="title-margin">
+    Tickets
+  </mat-card-title>
+  <div *ngIf="isLoading; then loader else table"></div>
+  <!-- loader -->
+  <ng-template #loader>
+    <div style="display: flex; justify-content: center;">
+      <div>
+        <mat-spinner></mat-spinner>
+      </div>
+    </div>
+  </ng-template>
+  <!-- tabla -->
+  <ng-template #table>
+    <!-- botones export -->
+    <div class="toogle-btns col">
+      <button mat-raised-button (click)="pdf()" id="edit" class="btn" class="secondary-color">PDF</button>
+      <button mat-raised-button (click)="excel()" class="btn secondary-color">Excel</button>
+    </div>
+    <!-- tabla general -->
+    <app-general-table [columns]="columns" [rows]="rows" (editButton)="edit($event)" (deletedButton)="deleted($event)" (detailsButton)="details($event)"></app-general-table>
 
-<button class="mdc-fab mdc-fab--extended app-fab--absolute">
+    <!-- Resumen -->
+    <mat-card [class.mat-elevation-z0]="true" class="border-sumary">
+      <mat-card-title>
+        Resumen
+      </mat-card-title>
+
+      <mat-card-content>
+        <mat-chip-list>
+          <mat-chip class="secondary-color" selected>Horas Totales: {{totalHours}}</mat-chip>
+          <mat-chip class="secondary-color">Ranking Promedio: {{averageRanking.toFixed(2)}}</mat-chip>
+          <mat-chip class="secondary-color">Costo Total: ${{totalCost}}</mat-chip>
+        </mat-chip-list>
+      </mat-card-content>
+
+    </mat-card>
+  </ng-template>
+</div>
+<div class="space-buttons"></div>
+
+
+<button (click)="newTicket()" class="mdc-fab mdc-fab--extended app-fab--absolute">
   <span class="material-icons mdc-fab__icon">add</span>
   <span class="mdc-fab__label">Nuevo</span>
 </button>
