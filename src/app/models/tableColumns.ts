@@ -6,4 +6,6 @@ export interface TableColumsModel {
   buttonDetails?: boolean;
   buttonEdit?: boolean;
   buttonDeleted?: boolean;
+  buttonMail?: boolean;
+  buttonRating?: boolean;
 }

@@ -50,13 +50,16 @@
 <div class="mat-elevation-z8">
   <table mat-table [dataSource]="dataSource" matSort>
     <ng-container *ngFor="let column of columns" [cdkColumnDef]="column.prop">
-      <mat-header-cell class="center-cell" mat-sort-header [ngClass]="{customWidthClass: column.w } " *cdkHeaderCellDef>{{ column.name }}</mat-header-cell>
+      <mat-header-cell mat-sort-header [ngClass]="{customWidthClass: column.w } " *cdkHeaderCellDef>{{ column.name }}</mat-header-cell>
+      <!-- normal -->
       <span *ngIf="column.type === 'normal'">
-        <mat-cell class="center-cell" [ngClass]="{customWidthClass: column.w } " *cdkCellDef="let row">{{ row[column.prop] }}</mat-cell>
+        <mat-cell [ngClass]="{customWidthClass: column.w } " *cdkCellDef="let row">{{ row[column.prop] }}</mat-cell>
       </span>
+      <!-- date -->
       <span *ngIf="column.type === 'date'">
-        <mat-cell class="center-cell" [ngClass]="{customWidthClass: column.w }" *cdkCellDef="let row">{{formatDates(row[column.prop])}}</mat-cell>
+        <mat-cell [ngClass]="{customWidthClass: column.w }" *cdkCellDef="let row">{{formatDates(row[column.prop])}}</mat-cell>
       </span>
+      <!-- status -->
       <span *ngIf="column.type === 'status'">
         <mat-cell class="center-cell chip" [ngClass]="{customWidthClass: column.w } " *cdkCellDef="let row">
           <mat-chip-list>
@@ -69,6 +72,7 @@
 
         </mat-cell>
       </span>
+      <!-- boolean -->
       <span *ngIf="column.type === 'boolean'">
         <mat-cell class="center-cell" [ngClass]="{customWidthClass: column.w }" *cdkCellDef="let row">
           <span class="margin-ranking ">
@@ -81,6 +85,7 @@
           </span>
         </mat-cell>
       </span>
+      <!-- ranking -->
       <span *ngIf="column.type === 'ranking'">
         <mat-cell [ngClass]="{customWidthClass: column.w }" class="margin-ranking" *cdkCellDef="let row">
           <div class="flexbox-ranking">
@@ -93,9 +98,15 @@
           </div>
         </mat-cell>
       </span>
+      <!-- money -->
       <span *ngIf="column.type === 'money'">
         <mat-cell class="center-cell" [ngClass]="{customWidthClass: column.w } " *cdkCellDef="let row"> $ {{ row[column.prop].toFixed(2) }}</mat-cell>
       </span>
+      <!-- number -->
+      <span *ngIf="column.type === 'number'">
+        <mat-cell class="center-cell" [ngClass]="{customWidthClass: column.w } " *cdkCellDef="let row"> {{ row[column.prop]}}</mat-cell>
+      </span>
+      <!-- butons -->
       <span *ngIf="column.type === 'buttons'">
         <mat-cell [ngClass]="{customWidthClass: column.w }" *cdkCellDef="let row" style="justify-content: center;">
           <div class="flexbox-ranking">
@@ -107,6 +118,13 @@
             </button>
             <button mat-icon-button color="warn" matTooltip="Borrar" matTooltipPosition="above" *ngIf="column.buttonDeleted" (click)="deletedItem(row)">
               <mat-icon class="secondary-text">delete</mat-icon>
+            </button>
+            <button mat-icon-button color="primary" matTooltip="Mensaje" matTooltipPosition="above" *ngIf="column.buttonMail" (click)="mailItem(row)">
+              <mat-icon class="secondary-text">mail</mat-icon>
+            </button>
+            <button mat-icon-button color="primary" matTooltip="Calificar" matTooltipPosition="above" *ngIf="column.buttonRating && row.status === 'Cerrado'"
+              (click)="ratingItem(row)">
+              <mat-icon class="secondary-text">stars</mat-icon>
             </button>
           </div>
         </mat-cell>

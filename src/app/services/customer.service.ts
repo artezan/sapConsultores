@@ -35,4 +35,13 @@ export class CustomerService {
       .delete(END_POINT.DELETE_CUSTOMER + customerId)
       .pipe(map((data: any) => data.data));
   }
+  public getCustomerSession(
+    name: string,
+    password
+  ): Observable<CustomerModel[]> {
+    const concatSession = btoa(name + ':' + password);
+    return this.http
+      .get(END_POINT.GET_CUSTOMER_SESSION + concatSession)
+      .pipe(map((data: any) => data.data));
+  }
 }

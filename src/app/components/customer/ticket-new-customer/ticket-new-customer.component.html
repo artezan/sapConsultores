@@ -1,0 +1,31 @@
+<mat-toolbar color="primary" [class.mat-elevation-z2]=true>
+  <span>Nuevo Ticket</span>
+</mat-toolbar>
+<div class="container" style="margin-top: 3%">
+  <form #newUserForm="ngForm">
+    <mat-card>
+      <mat-card-title>Describa el servicio que requiere</mat-card-title>
+      <div class="flex-container">
+        <!-- description -->
+        <mat-form-field appearance="outline">
+          <mat-label>Descripción o Servicio</mat-label>
+          <textarea matInput [(ngModel)]="ticket.description" #description="ngModel" id="description" name="description" required></textarea>
+          <mat-error *ngIf="description.dirty || description.touched">Anotar Servicio</mat-error>
+        </mat-form-field>
+      </div>
+      <mat-card-actions align="end">
+        <div style="margin-right: 2%">
+          <span [matTooltip]=errorToShow [matTooltipClass]="'tooltip-size'" (mouseenter)="getPopMessage($event)">
+            <button *ngIf="isNew" id="submitUser" mat-raised-button color="primary" (click)="newTicket()" [disabled]="!newUserForm.form.valid">Crear</button>
+          </span>
+        </div>
+        <div>
+          <button mat-raised-button color="warn" routerLink="/tickets-customer">Cancelar</button>
+        </div>
+
+      </mat-card-actions>
+
+    </mat-card>
+  </form>
+
+</div>

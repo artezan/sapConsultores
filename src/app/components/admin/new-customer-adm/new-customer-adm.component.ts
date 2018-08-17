@@ -38,8 +38,8 @@ export class NewCustomerAdmComponent implements OnInit {
         this.isNew = true;
       }
     });
-    this.session.userIdSession.subscribe(companyId => {
-      this.companyId = companyId;
+    this.session.userSession.subscribe(user => {
+      this.companyId = user.companyId;
     });
   }
   newCustomer() {

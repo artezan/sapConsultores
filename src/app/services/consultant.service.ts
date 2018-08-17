@@ -39,4 +39,13 @@ export class ConsultantService {
       .delete(END_POINT.DELETE_CONSULTANT + consultantId)
       .pipe(map((data: any) => data.data));
   }
+  public getConsultantSession(
+    name: string,
+    password
+  ): Observable<ConsultantModel[]> {
+    const concatSession = btoa(name + ':' + password);
+    return this.http
+      .get(END_POINT.GET_CONSULTANT_SESSION + concatSession)
+      .pipe(map((data: any) => data.data));
+  }
 }

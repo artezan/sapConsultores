@@ -10,6 +10,8 @@ import { ListCustomerAdmComponent } from './components/admin/list-customer-adm/l
 import { NewCustomerAdmComponent } from './components/admin/new-customer-adm/new-customer-adm.component';
 import { NewConsultantAdmComponent } from './components/admin/new-consultant-adm/new-consultant-adm.component';
 import { ListConsultantAdmComponent } from './components/admin/list-consultant-adm/list-consultant-adm.component';
+import { TicketNewCustomerComponent } from './components/customer/ticket-new-customer/ticket-new-customer.component';
+import { ConfCustomerComponent } from './components/customer/conf-customer/conf-customer.component';
 
 const routes: Routes = [
   // Rutas
@@ -23,7 +25,9 @@ const routes: Routes = [
   { path: 'list-customers-adm', component: ListCustomerAdmComponent },
   { path: 'new-customers-adm/:id', component: NewCustomerAdmComponent },
   { path: 'list-consultants-adm', component: ListConsultantAdmComponent },
-  { path: 'new-consultants-adm/:id', component: NewConsultantAdmComponent }
+  { path: 'new-consultants-adm/:id', component: NewConsultantAdmComponent },
+  { path: 'ticket-new-customer', component: TicketNewCustomerComponent },
+  { path: 'conf-customer', component: ConfCustomerComponent }
 ];
 
 @NgModule({

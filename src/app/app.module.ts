@@ -57,6 +57,9 @@ import { ListCustomerAdmComponent } from './components/admin/list-customer-adm/l
 import { NewCustomerAdmComponent } from './components/admin/new-customer-adm/new-customer-adm.component';
 import { NewConsultantAdmComponent } from './components/admin/new-consultant-adm/new-consultant-adm.component';
 import { ListConsultantAdmComponent } from './components/admin/list-consultant-adm/list-consultant-adm.component';
+import { TicketNewCustomerComponent } from './components/customer/ticket-new-customer/ticket-new-customer.component';
+import { StarRatingModule } from 'angular-star-rating';
+import { ConfCustomerComponent } from './components/customer/conf-customer/conf-customer.component';
 
 // npm
 
@@ -78,7 +81,9 @@ import { ListConsultantAdmComponent } from './components/admin/list-consultant-a
     ListCustomerAdmComponent,
     NewCustomerAdmComponent,
     NewConsultantAdmComponent,
-    ListConsultantAdmComponent
+    ListConsultantAdmComponent,
+    TicketNewCustomerComponent,
+    ConfCustomerComponent
   ],
   imports: [
     BrowserModule,
@@ -117,7 +122,8 @@ import { ListConsultantAdmComponent } from './components/admin/list-consultant-a
     MdcFabModule,
     MdcMenuModule,
     MdcIconModule,
-    CdkTableModule
+    CdkTableModule,
+    StarRatingModule.forRoot()
   ],
   providers: [
     /* {

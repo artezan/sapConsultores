@@ -48,6 +48,7 @@ export class TicketService {
       .pipe(map((data: any) => data.data));
   }
   public updateTicket(ticket: TicketModel): Observable<boolean> {
+    console.log(ticket);
     return this.http
       .put(END_POINT.PUT_TICKET_UPDATE + ticket._id, ticket)
       .pipe(map((data: any) => data.data));

@@ -1,32 +1,23 @@
 import { Component, OnInit } from '@angular/core';
+import { TicketModel } from '../../../models/ticket.model';
 import { ControllerMenuService } from '../../shared/general-menu/controller-menu.service';
 import { ActivatedRoute, Router, NavigationExtras } from '@angular/router';
-import { TicketModel } from '../../../models/ticket.model';
 import { CustomerService } from '../../../services/customer.service';
 import { ConsultantService } from '../../../services/consultant.service';
 import { SessionService } from '../../../services/session.service';
-import { Observable } from 'rxjs';
-import { CustomerModel } from '../../../models/customer.model';
-import { ConsultantModel } from '../../../models/consultant.model';
 import { TicketService } from '../../../services/ticket.service';
 
 @Component({
-  selector: 'app-ticket-new-adm',
-  templateUrl: './ticket-new-adm.component.html',
-  styleUrls: ['./ticket-new-adm.component.scss']
+  selector: 'app-ticket-new-customer',
+  templateUrl: './ticket-new-customer.component.html',
+  styleUrls: ['./ticket-new-customer.component.scss']
 })
-export class TicketNewAdmComponent implements OnInit {
+export class TicketNewCustomerComponent implements OnInit {
   companyId: string;
   isNew = true;
   errorToShow = '';
   errorToShowMat = 'Dato obligatorio';
   ticket: TicketModel = {};
-  customers$: Observable<CustomerModel[]>;
-  consultants$: Observable<ConsultantModel[]>;
-  oldCustomerId: string;
-  oldConsultantId: string;
-  addConsultant = false;
-  addCustomer = false;
   constructor(
     private controllerMenu: ControllerMenuService,
     private route: ActivatedRoute,
@@ -42,7 +33,7 @@ export class TicketNewAdmComponent implements OnInit {
   ngOnInit() {
     this.route.queryParams.subscribe(params => {
       if (Object.keys(params).length !== 0) {
-        let consultantId;
+        /* let consultantId;
         let customerId;
         let isPay;
         if (params.consultantId) {
@@ -69,26 +60,26 @@ export class TicketNewAdmComponent implements OnInit {
           status: params.status,
           _id: params._id
         };
-        this.isNew = false;
+        this.isNew = false; */
       } else {
         this.isNew = true;
       }
     });
     this.session.userSession.subscribe(user => {
       this.companyId = user.companyId;
-      this.customers$ = this.customerService.getCustomers(user.companyId);
-      this.consultants$ = this.consultantService.getConsultant(user.companyId);
+      this.ticket.customerId = user.userId;
     });
   }
   newTicket() {
     this.ticket.companyId = this.companyId;
+    this.ticket.hours = 0;
     this.ticketService.addTicket(this.ticket).subscribe(t => {
       const toast: NavigationExtras = {
-        queryParams: { res: 'Nuevo Ticket Agregado' }
+        queryParams: { res: 'nuevo' }
       };
-      this.router.navigate(['tickets-adm'], toast);
+      this.router.navigate(['tickets-customer'], toast);
     });
-  }
+  } /*
   editTicket() {
     if (
       this.oldConsultantId !== this.ticket.consultantId ||
@@ -125,7 +116,7 @@ export class TicketNewAdmComponent implements OnInit {
       };
       this.router.navigate(['tickets-adm'], toast);
     });
-  }
+  } */
   getPopMessage(event) {
     const isDisabled = (<HTMLInputElement>document.getElementById('submitUser'))
       .disabled;

@@ -40,9 +40,9 @@ export class TicketsAdmComponent implements OnInit {
     this.route.queryParams.subscribe(params => {
       if (Object.keys(params).length !== 0) {
         this.openSnackBar(params.res.toString());
-        this.sessionService.userIdSession.subscribe(sessionId => {
-          if (sessionId) {
-            this.getTickets(sessionId);
+        this.sessionService.userSession.subscribe(user => {
+          if (user.companyId) {
+            this.getTickets(user.companyId);
           }
         });
       }
@@ -74,7 +74,7 @@ export class TicketsAdmComponent implements OnInit {
       {
         name: 'Horas',
         prop: 'hours',
-        type: 'normal',
+        type: 'number',
         w: true
       },
       {
@@ -116,9 +116,9 @@ export class TicketsAdmComponent implements OnInit {
   }
   private createTable() {
     this.isLoading = true;
-    this.sessionService.userIdSession.subscribe(sessionId => {
-      if (sessionId) {
-        this.getTickets(sessionId);
+    this.sessionService.userSession.subscribe(user => {
+      if (user.companyId) {
+        this.getTickets(user.companyId);
       }
     });
   }

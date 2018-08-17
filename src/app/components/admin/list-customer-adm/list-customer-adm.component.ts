@@ -34,11 +34,6 @@ export class ListCustomerAdmComponent implements OnInit {
     this.route.queryParams.subscribe(params => {
       if (Object.keys(params).length !== 0) {
         this.openSnackBar(params.res.toString());
-        /* this.sessionService.userIdSession.subscribe(sessionId => {
-          if (sessionId) {
-            this.getCustomers(sessionId);
-          }
-        }); */
         this.createTable();
       }
     });
@@ -74,7 +69,7 @@ export class ListCustomerAdmComponent implements OnInit {
       {
         name: 'Horas',
         prop: 'totalHours',
-        type: 'normal',
+        type: 'number',
         w: true
       },
       {
@@ -89,22 +84,20 @@ export class ListCustomerAdmComponent implements OnInit {
   }
   private createTable() {
     this.isLoading = true;
-    this.sessionService.userIdSession.subscribe(sessionId => {
-      if (sessionId) {
-        this.getCustomers(sessionId);
+    this.sessionService.userSession.subscribe(user => {
+      if (user.companyId) {
+        this.getCustomers(user.companyId);
       }
     });
   }
 
   getCustomers(companyId) {
     this.customerService.getCustomers(companyId).subscribe(customers => {
-      console.log(customers);
       this.setRows(customers);
       this.sumary(customers);
     });
   }
   setRows(data: CustomerModel[]) {
-    console.log(data);
     const rows = [];
     data.forEach(ticket => {
       rows.push({

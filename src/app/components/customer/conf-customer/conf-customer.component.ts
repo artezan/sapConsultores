@@ -1,62 +1,53 @@
 import { Component, OnInit } from '@angular/core';
-import { ConsultantModel } from '../../../models/consultant.model';
+import { CustomerModel } from '../../../models/customer.model';
 import { ControllerMenuService } from '../../shared/general-menu/controller-menu.service';
-import { ConsultantService } from '../../../services/consultant.service';
-import { SessionService } from '../../../services/session.service';
 import { ActivatedRoute, Router, NavigationExtras } from '@angular/router';
+import { CustomerService } from '../../../services/customer.service';
+import { SessionService } from '../../../services/session.service';
 
 @Component({
-  selector: 'app-new-consultant-adm',
-  templateUrl: './new-consultant-adm.component.html',
-  styleUrls: ['./new-consultant-adm.component.scss']
+  selector: 'app-conf-customer',
+  templateUrl: './conf-customer.component.html',
+  styleUrls: ['./conf-customer.component.scss']
 })
-export class NewConsultantAdmComponent implements OnInit {
+export class ConfCustomerComponent implements OnInit {
+  avatar = '../../../../assets/user-logo.png';
+  customer: CustomerModel = {};
   hide = true;
-  companyId: string;
   isNew = true;
   errorToShow = '';
   errorToShowMat = 'Dato obligatorio';
-  consultant: ConsultantModel = {};
+
   constructor(
     private controllerMenu: ControllerMenuService,
     private route: ActivatedRoute,
     private router: Router,
-    public consultantService: ConsultantService,
+    public customerService: CustomerService,
     public session: SessionService
   ) {
     this.controllerMenu.menuSettings(true, true, '', '');
+    session.userSession.subscribe(user => {
+      this.customer.companyId = user.companyId;
+      this.customer._id = user.userId;
+      this.getCustomerInfo(user.userId);
+    });
   }
 
-  ngOnInit() {
-    this.route.params.subscribe(params => {
-      if (params['id'] !== 'new') {
-        this.consultantService.getConsultantById(params['id']).subscribe(c => {
-          this.consultant = c;
-        });
-        this.isNew = false;
-      } else {
-        this.isNew = true;
+  ngOnInit() {}
+  getCustomerInfo(id) {
+    this.customerService.getCustomersById(id).subscribe(c => {
+      this.customer = c;
+      if (c.logo) {
+        this.avatar = c.logo;
       }
     });
-    this.session.userSession.subscribe(user => {
-      this.companyId = user.companyId;
-    });
   }
-  newConsultant() {
-    this.consultant.companyId = this.companyId;
-    this.consultantService.addCosnultant(this.consultant).subscribe(t => {
+  editCustomer() {
+    this.customerService.updateCustomers(this.customer).subscribe(() => {
       const toast: NavigationExtras = {
-        queryParams: { res: 'Nuevo Consultor Agregado' }
+        queryParams: { res: 'editado' }
       };
-      this.router.navigate(['list-consultants-adm'], toast);
-    });
-  }
-  editConsultant() {
-    this.consultantService.updateCosnultant(this.consultant).subscribe(() => {
-      const toast: NavigationExtras = {
-        queryParams: { res: ' Cosnultor Editado' }
-      };
-      this.router.navigate(['list-consultants-adm'], toast);
+      this.router.navigate(['tickets-customer'], toast);
     });
   }
   getPopMessage(event) {

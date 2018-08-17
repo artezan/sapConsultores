@@ -22,7 +22,6 @@
             <th>Estado</th>
           </tr>
           <tr>
-            <!-- MODIFICAR -->
             <td>{{ticketObj.customer.name}}</td>
             <td>{{ticketObj.consultant.name}}</td>
             <td>{{ticketObj.ranking}}</td>
@@ -82,3 +81,43 @@
   </button>
 
 </ng-template>
+<div *ngIf="userType !== 'company'" class="form-post">
+  <mat-accordion>
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          <mat-card-title style=" margin: inherit;">Escribir Comentario</mat-card-title>
+        </mat-panel-title>
+        <mat-panel-description>
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+      <!-- Formulario -->
+
+      <mat-card [class.mat-elevation-z0]="true" class="border-sumary">
+        <div class="flex-container">
+          <mat-form-field appearance="outline">
+            <mat-label>Titulo (opcional)</mat-label>
+            <input matInput #title id="title" name="title" content="title">
+          </mat-form-field>
+          <!-- description -->
+          <mat-form-field appearance="outline">
+            <mat-label>Comentario</mat-label>
+            <textarea matInput #content id="description" required></textarea>
+            <mat-error *ngIf="content.dirty || content.touched">Anotar Contenido</mat-error>
+          </mat-form-field>
+        </div>
+        <mat-card-actions align="end">
+          <div style="margin-right: 2%">
+            <button id="submitUser" mat-raised-button color="primary" (click)="newPost(title.value, content.value)" [disabled]="!content.value ">Enviar</button>
+          </div>
+          <!-- <div>
+              <button mat-raised-button color="warn" routerLink="/tickets-customer">Cancelar</button>
+            </div> -->
+
+        </mat-card-actions>
+
+      </mat-card>
+
+    </mat-expansion-panel>
+  </mat-accordion>
+</div>

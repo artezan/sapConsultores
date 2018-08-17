@@ -7,7 +7,10 @@ export interface PostModel {
   title?: string;
   content?: string;
   ticket?: TicketModel;
+  ticketId?: string;
   customer?: CustomerModel;
   consultant?: ConsultantModel;
   isByCustomer?: boolean;
+  customerId?;
+  consultantId?;
 }

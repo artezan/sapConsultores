@@ -1,5 +1,30 @@
 /* Add application styles & imports to this file! */
 
+.flex-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.flex-container>* {
+  width: 100%;
+}
+
+.form-post {
+  margin: 2% 0% 1% 3%;
+  position: fixed;
+  top: auto;
+  bottom: 0%;
+  z-index: 999;
+  /* text-align: center !important; */
+  /* display: flex; */
+  /* flex-wrap: wrap; */
+  /* margin-right: 29%; */
+  /* padding: 5%; */
+  /* height: 100px; */
+  width: 80%;
+  max-width: 82%;
+}
+
 #post {
   table {
     border-collapse: collapse;

@@ -2,6 +2,28 @@
 <h3 mat-dialog-title>{{dataInput.subHeader}}</h3>
 <mat-dialog-content>
   <span *ngIf="dataInput.body" [innerHTML]="dataInput.body"></span>
+  <span *ngIf="dataInput.isRating">
+    <star-rating class="border" [starType]="'svg'" size="large" (ratingChange)="ratingResponse($event)"></star-rating>
+  </span>
+  <span *ngIf="dataInput.isform">
+    <form #newUserForm="ngForm">
+      <mat-form-field appearance="outline">
+        <mat-label>Estado </mat-label>
+        <mat-select [(ngModel)]="statusTicket" #status="ngModel" id="status" name="status">
+          <mat-option value="Atendiendo">
+            Atendiendo
+          </mat-option>
+          <mat-option value="Cerrado">
+            Cerrado
+          </mat-option>
+          <mat-option value="Pendiente">
+            Pendiente
+          </mat-option>
+
+        </mat-select>
+      </mat-form-field>
+    </form>
+  </span>
 </mat-dialog-content>
 <mat-dialog-actions>
   <button color="primary" (click)="buttonsResponse('ok')" mat-button mat-dialog-close>Ok</button>

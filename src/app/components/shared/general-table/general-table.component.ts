@@ -47,6 +47,10 @@ export class GeneralTableComponent implements OnInit, OnChanges {
   deletedButton = new EventEmitter<Array<any>>();
   @Output()
   detailsButton = new EventEmitter<Array<any>>();
+  @Output()
+  mailButton = new EventEmitter<Array<any>>();
+  @Output()
+  ratingButton = new EventEmitter<Array<any>>();
   @ViewChild(MatPaginator)
   paginator: MatPaginator;
   @ViewChild(MatSort)
@@ -140,6 +144,12 @@ export class GeneralTableComponent implements OnInit, OnChanges {
   }
   deletedItem(item) {
     this.deletedButton.emit(item);
+  }
+  mailItem(item) {
+    this.mailButton.emit(item);
+  }
+  ratingItem(item) {
+    this.ratingButton.emit(item);
   }
   editItem(item) {
     this.editButton.emit(item);

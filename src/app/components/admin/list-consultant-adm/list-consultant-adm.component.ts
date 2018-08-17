@@ -69,7 +69,7 @@ export class ListConsultantAdmComponent implements OnInit {
       {
         name: '# Tickets',
         prop: 'sumTickets',
-        type: 'normal',
+        type: 'number',
         w: true
       },
       {
@@ -84,22 +84,20 @@ export class ListConsultantAdmComponent implements OnInit {
   }
   private createTable() {
     this.isLoading = true;
-    this.sessionService.userIdSession.subscribe(sessionId => {
-      if (sessionId) {
-        this.getConsultant(sessionId);
+    this.sessionService.userSession.subscribe(user => {
+      if (user.companyId) {
+        this.getConsultant(user.companyId);
       }
     });
   }
 
   getConsultant(companyId) {
     this.consultantService.getConsultant(companyId).subscribe(consultant => {
-      console.log(consultant);
       this.setRows(consultant);
       // this.sumary(consultant);
     });
   }
   setRows(data: ConsultantModel[]) {
-    console.log(data);
     const rows = [];
     data.forEach(c => {
       let numTickets = 0;

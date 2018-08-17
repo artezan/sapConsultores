@@ -15,4 +15,9 @@ export class PostService {
       .get(END_POINT.GET_POST_BY_TICKET_ID + ticketId)
       .pipe(map((data: any) => data.data));
   }
+  public addPost(post: PostModel): Observable<PostModel[]> {
+    return this.http
+      .post(END_POINT.POST_NEW_POST, post)
+      .pipe(map((data: any) => data.data));
+  }
 }

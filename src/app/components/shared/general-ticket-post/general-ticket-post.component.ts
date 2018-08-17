@@ -39,6 +39,8 @@ export class GeneralTicketPostComponent implements OnInit {
   userType: string;
   rows;
   columns: TableColumsModel[];
+  postToSend: PostModel = {};
+  userId;
 
   constructor(
     private postService: PostService,
@@ -48,11 +50,15 @@ export class GeneralTicketPostComponent implements OnInit {
     private controllerMenu: ControllerMenuService,
     private session: SessionService
   ) {
-    session.userType.subscribe(userType => {
-      this.userType = userType;
-      this.controllerMenu.menuSettings(false, false, 'tickets', userType);
+    session.userSession.subscribe(user => {
+      this.userId = user.userId;
+      this.userType = user.type;
+      this.controllerMenu.menuSettings(false, false, 'tickets', user.type);
     });
 
+    this.createPosts();
+  }
+  private createPosts() {
     this.route.params.subscribe(params => (this.ticketId = params['id']));
     this.postService.getPost(this.ticketId).subscribe(posts => {
       this.posts = posts;
@@ -62,6 +68,7 @@ export class GeneralTicketPostComponent implements OnInit {
       });
     });
   }
+
   geDay(datePost): number {
     const day = new Date(datePost).getDate();
     return day;
@@ -120,5 +127,20 @@ export class GeneralTicketPostComponent implements OnInit {
       }
     });
     PDFGenerator(columsForPDF, rows, 450, 'Historial', subHeader, subHeader2);
+  }
+  newPost(title, contenet) {
+    this.postToSend.title = title;
+    this.postToSend.content = contenet;
+    this.postToSend.ticketId = this.ticketId;
+    if (this.userType === 'customer') {
+      this.postToSend.isByCustomer = true;
+      this.postToSend.customerId = this.userId;
+    } else {
+      this.postToSend.isByCustomer = false;
+      this.postToSend.consultantId = this.userId;
+    }
+    this.postService.addPost(this.postToSend).subscribe(() => {
+      this.createPosts();
+    });
   }
 }

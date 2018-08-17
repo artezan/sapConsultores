@@ -7,10 +7,12 @@ const ticketById = 'tickets/byticketid/';
 const putTicket = 'tickets/';
 const customerByCompanyId = 'customers/bycompanyid/';
 const customer = 'customers/';
+const customerSession = 'bycustomerpassword/';
 const customerByCustomerId = 'customers/bycustomerid/';
 const consultantByCompanyId = 'consultants/bycompanyid/';
 const customerByConsultantId = 'consultants/byconsultantid/';
 const consultant = 'consultants/';
+const consultantSession = 'byconsultantpassword/';
 const post = 'posts/';
 const postByTicketId = 'byticketid/';
 
@@ -29,13 +31,16 @@ export const END_POINT = {
   POST_CUSTOMER_NEW: apiUrl + customer,
   PUT_CUSTOMER: apiUrl + customer,
   DELETE_CUSTOMER: apiUrl + customer,
+  GET_CUSTOMER_SESSION: apiUrl + customer + customerSession,
   // consultant
   GET_CONSULTANT_BY_COMPANY_ID: apiUrl + consultantByCompanyId,
   POST_CONSULTANT_NEW: apiUrl + consultant,
   PUT_CONSULTANT: apiUrl + consultant,
   GET_CONSULTANT_BY_ID: apiUrl + customerByConsultantId,
   DELETE_CONSULTANT: apiUrl + consultant,
+  GET_CONSULTANT_SESSION: apiUrl + consultant + consultantSession,
 
   // post
-  GET_POST_BY_TICKET_ID: apiUrl + post + postByTicketId
+  GET_POST_BY_TICKET_ID: apiUrl + post + postByTicketId,
+  POST_NEW_POST: apiUrl + post
 };

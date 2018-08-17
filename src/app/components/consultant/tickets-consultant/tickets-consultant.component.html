@@ -1,3 +1,35 @@
-<p>
-  tickets-consultant works!
-</p>
+<div class="container">
+  <mat-card-title class="title-margin">
+    Tickets
+  </mat-card-title>
+  <div *ngIf="isLoading; then loader else table"></div>
+  <!-- loader -->
+  <ng-template #loader>
+    <div style="display: flex; justify-content: center;">
+      <div>
+        <mat-spinner></mat-spinner>
+      </div>
+    </div>
+  </ng-template>
+  <!-- tabla -->
+  <ng-template #table>
+    <!-- tabla general -->
+    <app-general-table [columns]="columns" [rows]="rows" (mailButton)="mail($event)" (detailsButton)="detail($event)"></app-general-table>
+
+    <!-- Resumen -->
+    <mat-card [class.mat-elevation-z0]="true" class="border-sumary">
+      <mat-card-title>
+        Resumen
+      </mat-card-title>
+
+      <mat-card-content>
+        <mat-chip-list>
+          <mat-chip class="secondary-color" selected>Ranking Promedio: {{consultant.rankingAverage}}</mat-chip>
+          <mat-chip class="secondary-color">Tickets Totales: {{consultant.tickets.length}}</mat-chip>
+        </mat-chip-list>
+      </mat-card-content>
+
+    </mat-card>
+  </ng-template>
+</div>
+<div class="space-buttons"></div>

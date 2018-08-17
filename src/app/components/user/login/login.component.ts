@@ -3,6 +3,8 @@ import { Router, NavigationExtras } from '@angular/router';
 import { ControllerMenuService } from '../../shared/general-menu/controller-menu.service';
 import { CompanyService } from '../../../services/company.service';
 import { SessionService } from '../../../services/session.service';
+import { ConsultantService } from '../../../services/consultant.service';
+import { CustomerService } from '../../../services/customer.service';
 
 @Component({
   selector: 'app-login',
@@ -19,31 +21,80 @@ export class LoginComponent implements OnInit {
     private router: Router,
     private controllerMenu: ControllerMenuService,
     private companyService: CompanyService,
-    private sessionService: SessionService
+    private sessionService: SessionService,
+    private consultantService: ConsultantService,
+    private customerService: CustomerService
   ) {}
 
   ngOnInit() {
     this.controllerMenu.menuSettings(true, true, '', '');
   }
   login() {
+    // admin
     if (this.typeOfUser === 'company') {
       this.companyService
         .getCompanySession(this.emailInput, this.passInput)
         .subscribe(company => {
           if (company.length > 0) {
             this.router.navigate(['tickets-adm']);
-            this.sessionService.setIdSession(company[0]._id);
+            this.sessionService.setSession(
+              company[0]._id,
+              company[0]._id,
+              this.typeOfUser
+            );
             this.sessionService.setUserType(this.typeOfUser);
           } else {
             this.isFind = false;
           }
         });
     }
+    // clientes
     if (this.typeOfUser === 'customer') {
-      this.router.navigate(['tickets-customer']);
+      this.customerService
+        .getCustomerSession(this.emailInput, this.passInput)
+        .subscribe(customer => {
+          if (customer.length > 0) {
+            this.router.navigate(['tickets-customer']);
+            this.sessionService.setSession(
+              customer[0]._id,
+              customer[0].companyId,
+              this.typeOfUser
+            );
+            this.sessionService.setUserType(this.typeOfUser);
+            /* this.sessionService.userInfo.next({
+              _id: customer[0]._id,
+              name: customer[0].name,
+              email: customer[0].email,
+              hours: customer[0].totalHours
+            }); */
+          } else {
+            this.isFind = false;
+          }
+        });
     }
+    // consiltores
     if (this.typeOfUser === 'consultant') {
-      this.router.navigate(['tickets-consultant']);
+      this.consultantService
+        .getConsultantSession(this.emailInput, this.passInput)
+        .subscribe(consultant => {
+          if (consultant.length > 0) {
+            this.router.navigate(['tickets-consultant']);
+            this.sessionService.setSession(
+              consultant[0]._id,
+              consultant[0].companyId,
+              this.typeOfUser
+            );
+            this.sessionService.setUserType(this.typeOfUser);
+            /*  this.sessionService.userInfo.next({
+              _id: consultant[0]._id,
+              name: consultant[0].name,
+              lastName: consultant[0].lastName,
+              ranking: consultant[0].rankingAverage
+            }); */
+          } else {
+            this.isFind = false;
+          }
+        });
     }
   }
 }
