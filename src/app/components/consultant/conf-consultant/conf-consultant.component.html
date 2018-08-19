@@ -1,0 +1,51 @@
+<mat-toolbar color="primary" [class.mat-elevation-z2]=true>
+  <span>Editar Datos</span>
+</mat-toolbar>
+<div class="container" style="margin-top: 3%">
+  <form #newUserForm="ngForm">
+    <mat-card>
+      <mat-card-title>Complete los campos</mat-card-title>
+      <div class="flex-container">
+        <!-- name -->
+        <mat-form-field appearance="outline">
+          <mat-label>Nombre</mat-label>
+          <input matInput placeholder="" [(ngModel)]="consultant.name" #name="ngModel" id="name" name="name" required>
+          <mat-error *ngIf="name.dirty || name.touched">Anotar Nombre</mat-error>
+        </mat-form-field>
+        <!-- name -->
+        <mat-form-field appearance="outline">
+          <mat-label>Apellido</mat-label>
+          <input matInput placeholder="" [(ngModel)]="consultant.lastName" #lastName="ngModel" id="lastName" name="lastName" required>
+          <mat-error *ngIf="lastName.dirty || lastName.touched">Anotar Apellido</mat-error>
+        </mat-form-field>
+        <!-- Area -->
+        <mat-form-field appearance="outline">
+          <mat-label>Área o Especialidad</mat-label>
+          <input matInput [(ngModel)]="consultant.description" #description="ngModel" id="description" name="description" required>
+          <mat-error *ngIf="description.dirty || description.touched">Anotar Área</mat-error>
+        </mat-form-field>
+        <!-- pass -->
+        <mat-form-field appearance="outline">
+          <mat-label>Contraseña</mat-label>
+          <input matInput [type]="hide ? 'password' : 'text'" [(ngModel)]="consultant.password" #password="ngModel" id="password" name="password"
+            required>
+          <mat-error *ngIf="password.dirty || password.touched">Anotar Contraseña</mat-error>
+          <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility' : 'visibility_off'}}</mat-icon>
+        </mat-form-field>
+      </div>
+      <mat-card-actions align="end">
+        <div style="margin-right: 2%">
+          <span [matTooltip]=errorToShow [matTooltipClass]="'tooltip-size'" (mouseenter)="getPopMessage($event)">
+            <button id="submitUser" mat-raised-button color="primary" (click)="editConsultant()">Editar</button>
+          </span>
+        </div>
+        <div>
+          <button mat-raised-button color="warn" routerLink="/tickets-consultant">Cancelar</button>
+        </div>
+
+      </mat-card-actions>
+
+    </mat-card>
+  </form>
+
+</div>

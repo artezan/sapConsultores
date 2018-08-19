@@ -125,7 +125,7 @@ export class TicketsCustomerComponent implements OnInit, OnDestroy {
     this.isLoading = true;
     // carga id de usuario
     this.sub = this.sessionService.userSession.subscribe(user => {
-      if (user.companyId !== undefined) {
+      if (user.companyId !== undefined && user.type === 'customer') {
         this.getTickets(user.userId);
       }
     });
@@ -189,8 +189,10 @@ export class TicketsCustomerComponent implements OnInit, OnDestroy {
       }
     });
     const sub2 = dialogRef.componentInstance.ratingResult.subscribe(res => {
-      this.ratingSet = res.rating;
-      this.setRating();
+      if (res) {
+        this.ratingSet = res.rating;
+        this.setRating();
+      }
     });
   }
   newTicket() {

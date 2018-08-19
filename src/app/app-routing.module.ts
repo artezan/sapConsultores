@@ -1,3 +1,4 @@
+import { ConfConsultantComponent } from './components/consultant/conf-consultant/conf-consultant.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { LoginComponent } from './components/user/login/login.component';
@@ -27,7 +28,8 @@ const routes: Routes = [
   { path: 'list-consultants-adm', component: ListConsultantAdmComponent },
   { path: 'new-consultants-adm/:id', component: NewConsultantAdmComponent },
   { path: 'ticket-new-customer', component: TicketNewCustomerComponent },
-  { path: 'conf-customer', component: ConfCustomerComponent }
+  { path: 'conf-customer', component: ConfCustomerComponent },
+  { path: 'conf-consultant', component: ConfConsultantComponent }
 ];
 
 @NgModule({

@@ -44,4 +44,9 @@ export class CustomerService {
       .get(END_POINT.GET_CUSTOMER_SESSION + concatSession)
       .pipe(map((data: any) => data.data));
   }
+  public addCustomerImg(formData: FormData): Observable<boolean> {
+    return this.http
+      .post(END_POINT.POST_IMG_CUSTOMER, formData)
+      .pipe(map((data: any) => data.data));
+  }
 }

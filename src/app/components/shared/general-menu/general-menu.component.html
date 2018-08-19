@@ -23,7 +23,7 @@
     <!-- consultant -->
     <mat-nav-list *ngIf="typeUser === 'consultant'">
       <a [ngClass]="{'a-active': menuSelect === 'tickets'}" mat-list-item routerLink="/tickets-consultant" (click)="close()">Tickets</a>
-
+      <a [ngClass]="{'a-active': menuSelect === 'conf'}" mat-list-item routerLink="/conf-consultant" (click)="close()">Configuración</a>
     </mat-nav-list>
     <!-- customer -->
     <mat-nav-list *ngIf="typeUser === 'customer'">

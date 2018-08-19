@@ -60,6 +60,7 @@ import { ListConsultantAdmComponent } from './components/admin/list-consultant-a
 import { TicketNewCustomerComponent } from './components/customer/ticket-new-customer/ticket-new-customer.component';
 import { StarRatingModule } from 'angular-star-rating';
 import { ConfCustomerComponent } from './components/customer/conf-customer/conf-customer.component';
+import { ConfConsultantComponent } from './components/consultant/conf-consultant/conf-consultant.component';
 
 // npm
 
@@ -83,7 +84,8 @@ import { ConfCustomerComponent } from './components/customer/conf-customer/conf-
     NewConsultantAdmComponent,
     ListConsultantAdmComponent,
     TicketNewCustomerComponent,
-    ConfCustomerComponent
+    ConfCustomerComponent,
+    ConfConsultantComponent
   ],
   imports: [
     BrowserModule,

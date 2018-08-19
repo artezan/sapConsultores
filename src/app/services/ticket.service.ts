@@ -21,7 +21,7 @@ export class TicketService {
       .get(END_POINT.GET_TICKETS_BY_ID + ticketId)
       .pipe(map((data: any) => data.data));
   }
-  public addTicket(ticket: TicketModel): Observable<TicketModel[]> {
+  public addTicket(ticket: TicketModel): Observable<TicketModel> {
     return this.http
       .post(END_POINT.POST_TICKET_NEW, ticket)
       .pipe(map((data: any) => data.data));
@@ -42,13 +42,11 @@ export class TicketService {
       body['newConsultantId'] = newConsultantId;
       body['oldConsultantId'] = oldConsultantId;
     }
-    console.log(body);
     return this.http
       .post(END_POINT.POST_TICKET_CHANGE + ticketId, body)
       .pipe(map((data: any) => data.data));
   }
   public updateTicket(ticket: TicketModel): Observable<boolean> {
-    console.log(ticket);
     return this.http
       .put(END_POINT.PUT_TICKET_UPDATE + ticket._id, ticket)
       .pipe(map((data: any) => data.data));

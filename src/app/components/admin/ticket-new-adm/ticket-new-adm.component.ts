@@ -83,10 +83,12 @@ export class TicketNewAdmComponent implements OnInit {
   newTicket() {
     this.ticket.companyId = this.companyId;
     this.ticketService.addTicket(this.ticket).subscribe(t => {
-      const toast: NavigationExtras = {
-        queryParams: { res: 'Nuevo Ticket Agregado' }
-      };
-      this.router.navigate(['tickets-adm'], toast);
+      this.ticketService.updateTicket(t).subscribe(() => {
+        const toast: NavigationExtras = {
+          queryParams: { res: 'Nuevo Ticket Agregado' }
+        };
+        this.router.navigate(['tickets-adm'], toast);
+      });
     });
   }
   editTicket() {
@@ -120,10 +122,12 @@ export class TicketNewAdmComponent implements OnInit {
     delete this.ticket.consultantId;
     delete this.ticket.customerId;
     this.ticketService.updateTicket(this.ticket).subscribe(res => {
-      const toast: NavigationExtras = {
-        queryParams: { res: ' Ticket Editado' }
-      };
-      this.router.navigate(['tickets-adm'], toast);
+      this.ticketService.updateTicket(this.ticket).subscribe(res2 => {
+        const toast: NavigationExtras = {
+          queryParams: { res: ' Ticket Editado' }
+        };
+        this.router.navigate(['tickets-adm'], toast);
+      });
     });
   }
   getPopMessage(event) {

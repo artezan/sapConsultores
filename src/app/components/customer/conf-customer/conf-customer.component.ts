@@ -4,6 +4,7 @@ import { ControllerMenuService } from '../../shared/general-menu/controller-menu
 import { ActivatedRoute, Router, NavigationExtras } from '@angular/router';
 import { CustomerService } from '../../../services/customer.service';
 import { SessionService } from '../../../services/session.service';
+import { END_POINT } from '../../../_config/api.end-points';
 
 @Component({
   selector: 'app-conf-customer',
@@ -17,6 +18,8 @@ export class ConfCustomerComponent implements OnInit {
   isNew = true;
   errorToShow = '';
   errorToShowMat = 'Dato obligatorio';
+  formData: FormData;
+  img;
 
   constructor(
     private controllerMenu: ControllerMenuService,
@@ -43,12 +46,34 @@ export class ConfCustomerComponent implements OnInit {
     });
   }
   editCustomer() {
+    this.customer.logo = END_POINT.IP + this.img;
     this.customerService.updateCustomers(this.customer).subscribe(() => {
-      const toast: NavigationExtras = {
-        queryParams: { res: 'editado' }
-      };
-      this.router.navigate(['tickets-customer'], toast);
+      this.customerService.addCustomerImg(this.formData).subscribe(res => {
+        const toast: NavigationExtras = {
+          queryParams: { res: 'editado' }
+        };
+        this.router.navigate(['tickets-customer'], toast);
+      });
     });
+  }
+  link() {
+    const input = document.getElementById('imagen1').click();
+  }
+  fileChangeEvent(fileInput) {
+    const imgToUpload = <File>fileInput.target.files[0];
+    const formData = new FormData();
+    formData.append('imagen1', imgToUpload);
+    this.img = imgToUpload.name;
+    this.formData = formData;
+    // preview
+    const reader = new FileReader();
+    reader.onload = r => {
+      this.render2(reader.result);
+    };
+    reader.readAsDataURL(imgToUpload);
+  }
+  render2(src) {
+    this.avatar = src;
   }
   getPopMessage(event) {
     const isDisabled = (<HTMLInputElement>document.getElementById('submitUser'))

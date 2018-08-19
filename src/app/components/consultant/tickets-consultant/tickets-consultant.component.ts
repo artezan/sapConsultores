@@ -44,8 +44,6 @@ export class TicketsConsultantComponent implements OnInit, OnDestroy {
         if (params.res === 'editado') {
           this.openSnackBar('Perfil Editado');
         } else {
-          const body = '<p> En breve se le asignará horas y un consultor </p>';
-          this.openDialog('Ticket', 'Se ha generado un ticket nuevo', body);
         }
         this.createTable();
       }
@@ -131,7 +129,6 @@ export class TicketsConsultantComponent implements OnInit, OnDestroy {
     const rows = [];
     data.forEach(ticket => {
       let customerName = 'Sin asignar';
-      console.log(ticket);
       if (ticket.customer) {
         customerName = ticket.customer.name;
       }

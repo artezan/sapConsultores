@@ -45,7 +45,7 @@ export class GeneralMenuComponent {
       this.isHideExit = data.hideExit;
       this.menuSelect = data.selectSection;
       this.typeUser = data.typeUser;
-      if (data.typeUser === 'customer') {
+      if (data.typeUser !== 'company') {
         this.getInfoUser();
       }
       this.isHandset$.subscribe(isHan => {
@@ -81,11 +81,13 @@ export class GeneralMenuComponent {
             this.name = customer.name;
             this.email = customer.email;
           });
-      } /* else {
-        this.consultantService.getConsultantById(id).subscribe(consultant => {
-          this.name = consultant.name;
-        });
-      } */
+      } else if (user.type === 'consultant' && user.companyId) {
+        this.consultantService
+          .getConsultantById(user.userId)
+          .subscribe(consultant => {
+            this.name = consultant.name;
+          });
+      }
     });
   }
 }

@@ -1,4 +1,6 @@
-const apiUrl = 'http://31.220.52.51:3000/api/v1/';
+const ip = 'http://31.220.52.51:3000/';
+const apiUrl = ip + 'api/v1/';
+
 const company = 'companies/';
 const ticketsByCompanyID = 'tickets/bycompanyid/';
 const ticketsNew = 'tickets/newticket/';
@@ -7,6 +9,7 @@ const ticketById = 'tickets/byticketid/';
 const putTicket = 'tickets/';
 const customerByCompanyId = 'customers/bycompanyid/';
 const customer = 'customers/';
+const uploadImg = 'uploadImg/';
 const customerSession = 'bycustomerpassword/';
 const customerByCustomerId = 'customers/bycustomerid/';
 const consultantByCompanyId = 'consultants/bycompanyid/';
@@ -17,6 +20,7 @@ const post = 'posts/';
 const postByTicketId = 'byticketid/';
 
 export const END_POINT = {
+  IP: ip,
   COMPANY: apiUrl + company,
   // tickets
   GET_TICKETS_BY_COMPANY_ID: apiUrl + ticketsByCompanyID,
@@ -32,6 +36,7 @@ export const END_POINT = {
   PUT_CUSTOMER: apiUrl + customer,
   DELETE_CUSTOMER: apiUrl + customer,
   GET_CUSTOMER_SESSION: apiUrl + customer + customerSession,
+  POST_IMG_CUSTOMER: apiUrl + customer + uploadImg,
   // consultant
   GET_CONSULTANT_BY_COMPANY_ID: apiUrl + consultantByCompanyId,
   POST_CONSULTANT_NEW: apiUrl + consultant,
