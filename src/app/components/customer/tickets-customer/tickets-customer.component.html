@@ -13,6 +13,11 @@
   </ng-template>
   <!-- tabla -->
   <ng-template #table>
+    <!-- mensaje no visto -->
+    <div *ngFor="let post of postNoSeen" class="alert alert-danger flexbox-alert " (click)="mail(post.ticket)">
+      Tiene un mensaje nuevo de {{post.consultant.name}}
+      <span style="margin-left: 1%" class="material-icons mdc-fab__icon">visibility</span>
+    </div>
     <!-- tabla general -->
     <app-general-table [columns]="columns" [rows]="rows" (mailButton)="mail($event)" (ratingButton)="rating($event)"></app-general-table>
 

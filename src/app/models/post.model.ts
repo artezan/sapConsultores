@@ -11,6 +11,8 @@ export interface PostModel {
   customer?: CustomerModel;
   consultant?: ConsultantModel;
   isByCustomer?: boolean;
+  seen?: boolean;
+  _id?: string;
   customerId?;
   consultantId?;
 }

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router, NavigationExtras } from '@angular/router';
 import { ControllerMenuService } from '../../shared/general-menu/controller-menu.service';
 import { CompanyService } from '../../../services/company.service';
-import { SessionService } from '../../../services/session.service';
+import { SessionService, UserInfo } from '../../../services/session.service';
 import { ConsultantService } from '../../../services/consultant.service';
 import { CustomerService } from '../../../services/customer.service';
 
@@ -24,12 +24,20 @@ export class LoginComponent implements OnInit {
     private sessionService: SessionService,
     private consultantService: ConsultantService,
     private customerService: CustomerService
-  ) {}
+  ) {
+    localStorage.removeItem('userSession');
+  }
 
   ngOnInit() {
     this.controllerMenu.menuSettings(true, true, '', '');
   }
   login() {
+    const currentData: UserInfo = {
+      type: this.typeOfUser,
+      name: this.emailInput,
+      password: this.passInput
+    };
+    localStorage.setItem('userSession', JSON.stringify(currentData));
     // admin
     if (this.typeOfUser === 'company') {
       this.companyService

@@ -7,6 +7,8 @@ export interface UserInfo {
    * company, customer, consultant
    */
   type?: string;
+  name?: string;
+  password?: string;
 }
 
 @Injectable({

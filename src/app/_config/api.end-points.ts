@@ -1,4 +1,6 @@
 const ip = 'http://31.220.52.51:3000/';
+// const ip = 'http://localhost:3000/';
+
 const apiUrl = ip + 'api/v1/';
 
 const company = 'companies/';
@@ -47,5 +49,6 @@ export const END_POINT = {
 
   // post
   GET_POST_BY_TICKET_ID: apiUrl + post + postByTicketId,
-  POST_NEW_POST: apiUrl + post
+  POST_NEW_POST: apiUrl + post,
+  PUT_UPDATE_POST: apiUrl + post
 };

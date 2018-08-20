@@ -58,7 +58,7 @@ export class GeneralMenuComponent {
     });
   }
   logout() {
-    localStorage.removeItem('userKey');
+    localStorage.removeItem('userSession');
     this.sessionService.setSession(undefined, undefined, undefined);
     this.router.navigate(['login']);
   }

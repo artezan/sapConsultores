@@ -81,8 +81,10 @@
   </button>
 
 </ng-template>
+<div class="space-buttons"></div>
 <div *ngIf="userType !== 'company'" class="form-post">
-  <mat-accordion>
+  <!-- acordion -->
+  <mat-accordion multi>
     <mat-expansion-panel>
       <mat-expansion-panel-header>
         <mat-panel-title>
@@ -108,10 +110,11 @@
         </div>
         <mat-card-actions align="end">
           <div style="margin-right: 2%">
-            <button id="submitUser" mat-raised-button color="primary" (click)="newPost(title.value, content.value)" [disabled]="!content.value ">Enviar</button>
+            <button id="submitUser" mat-raised-button color="primary" (click)="newPost(title.value, content.value);accordion.closeAll()"
+              [disabled]="!content.value ">Enviar</button>
           </div>
           <!-- <div>
-              <button mat-raised-button color="warn" routerLink="/tickets-customer">Cancelar</button>
+              <button mat-raised-button color="warn" routerLink="/tickets-customer">Cancelar</button> // newPost(title.value, content.value);
             </div> -->
 
         </mat-card-actions>

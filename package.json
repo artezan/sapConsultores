@@ -30,6 +30,7 @@
     "@angular/platform-browser-dynamic": "^6.0.0",
     "@angular/router": "^6.0.0",
     "@material/fab": "^0.38.0",
+    "@types/socket.io-client": "^1.4.32",
     "angular-star-rating": "^4.0.0-beta.3",
     "core-js": "^2.5.4",
     "css-star-rating": "^1.2.4",
@@ -39,6 +40,7 @@
     "path": "^0.12.7",
     "pdfmake": "^0.1.37",
     "rxjs": "^6.0.0",
+    "socket.io-client": "^2.1.1",
     "typescript": "~2.7.2",
     "xlsx": "^0.13.4",
     "zone.js": "^0.8.26"

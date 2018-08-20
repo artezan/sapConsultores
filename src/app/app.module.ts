@@ -61,6 +61,7 @@ import { TicketNewCustomerComponent } from './components/customer/ticket-new-cus
 import { StarRatingModule } from 'angular-star-rating';
 import { ConfCustomerComponent } from './components/customer/conf-customer/conf-customer.component';
 import { ConfConsultantComponent } from './components/consultant/conf-consultant/conf-consultant.component';
+import { ApiTokenInterceptor } from './_config/api-tokens';
 
 // npm
 
@@ -128,11 +129,11 @@ import { ConfConsultantComponent } from './components/consultant/conf-consultant
     StarRatingModule.forRoot()
   ],
   providers: [
-    /* {
+    {
       provide: HTTP_INTERCEPTORS,
       useClass: ApiTokenInterceptor,
       multi: true
-    } ,*/
+    }
   ],
   bootstrap: [AppComponent]
 })

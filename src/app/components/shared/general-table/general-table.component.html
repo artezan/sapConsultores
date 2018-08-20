@@ -48,91 +48,93 @@
 </mat-card>
 <br>
 <div class="mat-elevation-z8">
-  <table mat-table [dataSource]="dataSource" matSort>
-    <ng-container *ngFor="let column of columns" [cdkColumnDef]="column.prop">
-      <mat-header-cell mat-sort-header [ngClass]="{customWidthClass: column.w } " *cdkHeaderCellDef>{{ column.name }}</mat-header-cell>
-      <!-- normal -->
-      <span *ngIf="column.type === 'normal'">
-        <mat-cell [ngClass]="{customWidthClass: column.w } " *cdkCellDef="let row">{{ row[column.prop] }}</mat-cell>
-      </span>
-      <!-- date -->
-      <span *ngIf="column.type === 'date'">
-        <mat-cell [ngClass]="{customWidthClass: column.w }" *cdkCellDef="let row">{{formatDates(row[column.prop])}}</mat-cell>
-      </span>
-      <!-- status -->
-      <span *ngIf="column.type === 'status'">
-        <mat-cell class="center-cell chip" [ngClass]="{customWidthClass: column.w } " *cdkCellDef="let row">
-          <mat-chip-list>
-            <mat-chip (click)="onSelect(row)" [ngClass]="{
+  <div style="overflow-x:auto;">
+    <table mat-table [dataSource]="dataSource" matSort>
+      <ng-container *ngFor="let column of columns" [cdkColumnDef]="column.prop">
+        <mat-header-cell mat-sort-header [ngClass]="{customWidthClass: column.w } " *cdkHeaderCellDef>{{ column.name }}</mat-header-cell>
+        <!-- normal -->
+        <span *ngIf="column.type === 'normal'">
+          <mat-cell [ngClass]="{customWidthClass: column.w } " *cdkCellDef="let row">{{ row[column.prop] }}</mat-cell>
+        </span>
+        <!-- date -->
+        <div *ngIf="column.type === 'date'">
+          <mat-cell style="padding: 0% 1% 0% 1%" [ngClass]="{customWidthClass: column.w }" *cdkCellDef="let row">{{formatDates(row[column.prop])}}</mat-cell>
+        </div>
+        <!-- status -->
+        <span *ngIf="column.type === 'status'">
+          <mat-cell class="center-cell chip" [ngClass]="{customWidthClass: column.w } " *cdkCellDef="let row">
+            <mat-chip-list>
+              <mat-chip (click)="onSelect(row)" [ngClass]="{
               'chip-yellow': row[column.prop] === 'Pendiente', 
               'chip-green': row[column.prop] === 'Atendiendo',
               'chip-black': row[column.prop] === 'Cerrado' 
           }">{{ row[column.prop] }}</mat-chip>
-          </mat-chip-list>
+            </mat-chip-list>
 
-        </mat-cell>
-      </span>
-      <!-- boolean -->
-      <span *ngIf="column.type === 'boolean'">
-        <mat-cell class="center-cell" [ngClass]="{customWidthClass: column.w }" *cdkCellDef="let row">
-          <span class="margin-ranking ">
-            <button *ngIf="row[column.prop]" (click)="onSelect(row)" mat-icon-button>
-              <mat-icon class="secondary-text" class="green-icon">check_circle</mat-icon>
-            </button>
-            <button *ngIf="!row[column.prop]" (click)="onSelect(row)" mat-icon-button>
-              <mat-icon class="secondary-text" class="red-icon">cancel</mat-icon>
-            </button>
-          </span>
-        </mat-cell>
-      </span>
-      <!-- ranking -->
-      <span *ngIf="column.type === 'ranking'">
-        <mat-cell [ngClass]="{customWidthClass: column.w }" class="margin-ranking" *cdkCellDef="let row">
-          <div class="flexbox-ranking">
-            <span *ngIf="row[column.prop] > 0">
-              <mat-icon *ngFor="let starts of getArray(row[column.prop])" class="secondary-text" class="yellow-icon">star_rate</mat-icon>
+          </mat-cell>
+        </span>
+        <!-- boolean -->
+        <span *ngIf="column.type === 'boolean'">
+          <mat-cell class="center-cell" [ngClass]="{customWidthClass: column.w }" *cdkCellDef="let row">
+            <span class="margin-ranking ">
+              <button *ngIf="row[column.prop]" (click)="onSelect(row)" mat-icon-button>
+                <mat-icon class="secondary-text" class="green-icon">check_circle</mat-icon>
+              </button>
+              <button *ngIf="!row[column.prop]" (click)="onSelect(row)" mat-icon-button>
+                <mat-icon class="secondary-text" class="red-icon">cancel</mat-icon>
+              </button>
             </span>
-            <span *ngIf="row[column.prop] === 0">
-              Sin calificar
-            </span>
-          </div>
-        </mat-cell>
-      </span>
-      <!-- money -->
-      <span *ngIf="column.type === 'money'">
-        <mat-cell class="center-cell" [ngClass]="{customWidthClass: column.w } " *cdkCellDef="let row"> $ {{ row[column.prop].toFixed(2) }}</mat-cell>
-      </span>
-      <!-- number -->
-      <span *ngIf="column.type === 'number'">
-        <mat-cell class="center-cell" [ngClass]="{customWidthClass: column.w } " *cdkCellDef="let row"> {{ row[column.prop]}}</mat-cell>
-      </span>
-      <!-- butons -->
-      <span *ngIf="column.type === 'buttons'">
-        <mat-cell [ngClass]="{customWidthClass: column.w }" *cdkCellDef="let row" style="justify-content: center;">
-          <div class="flexbox-ranking">
-            <button mat-icon-button matTooltip="Detalles" matTooltipPosition="above" color="primary" *ngIf="column.buttonDetails" (click)="detailsItem(row)">
-              <mat-icon class="secondary-text">info</mat-icon>
-            </button>
-            <button mat-icon-button color="primary" matTooltip="Editar" matTooltipPosition="above" *ngIf="column.buttonEdit" (click)="editItem(row)">
-              <mat-icon class="secondary-text">create</mat-icon>
-            </button>
-            <button mat-icon-button color="warn" matTooltip="Borrar" matTooltipPosition="above" *ngIf="column.buttonDeleted" (click)="deletedItem(row)">
-              <mat-icon class="secondary-text">delete</mat-icon>
-            </button>
-            <button mat-icon-button color="primary" matTooltip="Mensaje" matTooltipPosition="above" *ngIf="column.buttonMail" (click)="mailItem(row)">
-              <mat-icon class="secondary-text">mail</mat-icon>
-            </button>
-            <button mat-icon-button color="primary" matTooltip="Calificar" matTooltipPosition="above" *ngIf="column.buttonRating && row.status === 'Cerrado'"
-              (click)="ratingItem(row)">
-              <mat-icon class="secondary-text">stars</mat-icon>
-            </button>
-          </div>
-        </mat-cell>
-      </span>
-    </ng-container>
-    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
-  </table>
+          </mat-cell>
+        </span>
+        <!-- ranking -->
+        <span *ngIf="column.type === 'ranking'">
+          <mat-cell [ngClass]="{customWidthClass: column.w }" class="margin-ranking" *cdkCellDef="let row">
+            <div class="flexbox-ranking">
+              <span *ngIf="row[column.prop] > 0">
+                <mat-icon *ngFor="let starts of getArray(row[column.prop])" class="secondary-text" class="yellow-icon">star_rate</mat-icon>
+              </span>
+              <span *ngIf="row[column.prop] === 0">
+                Sin calificar
+              </span>
+            </div>
+          </mat-cell>
+        </span>
+        <!-- money -->
+        <span *ngIf="column.type === 'money'">
+          <mat-cell class="center-cell" [ngClass]="{customWidthClass: column.w } " *cdkCellDef="let row"> $ {{ row[column.prop].toFixed(2) }}</mat-cell>
+        </span>
+        <!-- number -->
+        <span *ngIf="column.type === 'number'">
+          <mat-cell class="center-cell" [ngClass]="{customWidthClass: column.w } " *cdkCellDef="let row"> {{ row[column.prop]}}</mat-cell>
+        </span>
+        <!-- butons -->
+        <span *ngIf="column.type === 'buttons'">
+          <mat-cell [ngClass]="{customWidthClass: column.w }" *cdkCellDef="let row" style="justify-content: center;">
+            <div class="flexbox-ranking">
+              <button mat-icon-button matTooltip="Detalles" matTooltipPosition="above" color="primary" *ngIf="column.buttonDetails" (click)="detailsItem(row)">
+                <mat-icon class="secondary-text">info</mat-icon>
+              </button>
+              <button mat-icon-button color="primary" matTooltip="Editar" matTooltipPosition="above" *ngIf="column.buttonEdit" (click)="editItem(row)">
+                <mat-icon class="secondary-text">create</mat-icon>
+              </button>
+              <button mat-icon-button color="warn" matTooltip="Borrar" matTooltipPosition="above" *ngIf="column.buttonDeleted" (click)="deletedItem(row)">
+                <mat-icon class="secondary-text">delete</mat-icon>
+              </button>
+              <button mat-icon-button color="primary" matTooltip="Mensaje" matTooltipPosition="above" *ngIf="column.buttonMail" (click)="mailItem(row)">
+                <mat-icon class="secondary-text">mail</mat-icon>
+              </button>
+              <button mat-icon-button color="primary" matTooltip="Calificar" matTooltipPosition="above" *ngIf="column.buttonRating && row.status === 'Cerrado'"
+                (click)="ratingItem(row)">
+                <mat-icon class="secondary-text">stars</mat-icon>
+              </button>
+            </div>
+          </mat-cell>
+        </span>
+      </ng-container>
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    </table>
+  </div>
 
   <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" [pageSize]="10"></mat-paginator>
 </div>

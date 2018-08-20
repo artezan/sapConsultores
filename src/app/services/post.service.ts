@@ -20,4 +20,9 @@ export class PostService {
       .post(END_POINT.POST_NEW_POST, post)
       .pipe(map((data: any) => data.data));
   }
+  public updatePost(post: PostModel): Observable<boolean> {
+    return this.http
+      .put(END_POINT.PUT_UPDATE_POST + post._id, post)
+      .pipe(map((data: any) => data.data));
+  }
 }

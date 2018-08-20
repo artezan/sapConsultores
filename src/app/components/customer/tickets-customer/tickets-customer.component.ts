@@ -18,6 +18,9 @@ import { CustomerService } from '../../../services/customer.service';
 import { ConsultantService } from '../../../services/consultant.service';
 import { ConsultantModel } from '../../../models/consultant.model';
 import { GeneralAlertComponent } from '../../shared/general-alert/general-alert.component';
+import { PostService } from '../../../services/post.service';
+import { PostModel } from '../../../models/post.model';
+import { SocketIoService } from '../../../services/socket-io.service';
 
 @Component({
   selector: 'app-tickets-customer',
@@ -37,6 +40,8 @@ export class TicketsCustomerComponent implements OnInit, OnDestroy {
   //  Rating
   ratingSet: number;
   ticketToUpdate: TicketModel = {};
+  postNoSeen: PostModel[] = [];
+  customerId: string;
   constructor(
     public snackBar: MatSnackBar,
     private route: ActivatedRoute,
@@ -45,7 +50,9 @@ export class TicketsCustomerComponent implements OnInit, OnDestroy {
     private sessionService: SessionService,
     public ticketService: TicketService,
     public dialog: MatDialog,
-    private customerService: CustomerService
+    private customerService: CustomerService,
+    private postService: PostService,
+    private socketIoService: SocketIoService
   ) {
     this.controllerMenu.menuSettings(false, false, 'tickets', 'customer');
     this.route.queryParams.subscribe(params => {
@@ -117,6 +124,15 @@ export class TicketsCustomerComponent implements OnInit, OnDestroy {
       }
     ];
     this.createTable();
+    this.socketIoService.onNewPost().subscribe(post => {
+      if (this.customerId) {
+        this.customerService.getCustomersById(this.customerId).subscribe(c => {
+          if (c.tickets) {
+            this.checkPost(c.tickets);
+          }
+        });
+      }
+    });
   }
 
   ngOnInit() {}
@@ -126,6 +142,7 @@ export class TicketsCustomerComponent implements OnInit, OnDestroy {
     // carga id de usuario
     this.sub = this.sessionService.userSession.subscribe(user => {
       if (user.companyId !== undefined && user.type === 'customer') {
+        this.customerId = user.userId;
         this.getTickets(user.userId);
       }
     });
@@ -139,6 +156,7 @@ export class TicketsCustomerComponent implements OnInit, OnDestroy {
         this.customer = c;
         if (c.tickets) {
           this.setRows(c.tickets);
+          this.checkPost(c.tickets);
         }
       });
   }
@@ -198,7 +216,11 @@ export class TicketsCustomerComponent implements OnInit, OnDestroy {
   newTicket() {
     this.router.navigate(['ticket-new-customer']);
   }
-  mail(item) {
+  /**
+   * VER posts
+   * @param item ticket
+   */
+  mail(item: TicketModel) {
     this.router.navigate(['ticket-posts', item._id]);
   }
   rating(item: TicketModel) {
@@ -212,6 +234,23 @@ export class TicketsCustomerComponent implements OnInit, OnDestroy {
     this.ticketService.updateTicket(this.ticketToUpdate).subscribe(res => {
       this.openSnackBar('Gracias por su calificación');
       this.createTable();
+    });
+  }
+  checkPost(tickets: TicketModel[]) {
+    tickets.forEach(ticket => {
+      this.postService.getPost(ticket._id).subscribe(posts => {
+        const noSeen = posts.filter(
+          post => post.seen === false && post.isByCustomer === false
+        );
+        noSeen.forEach(n => {
+          const isFinded = this.postNoSeen.findIndex(
+            post => post.consultant._id === n.consultant._id
+          );
+          if (isFinded === -1) {
+            this.postNoSeen.push(n);
+          }
+        });
+      });
     });
   }
   ngOnDestroy() {

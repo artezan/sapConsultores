@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
 import { POST } from './posts';
 import { PostService } from '../../../services/post.service';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -10,6 +10,8 @@ import { SessionService } from '../../../services/session.service';
 import { PDFGenerator } from '../../../_config/pdf-generator';
 import { TableColumsModel } from '../../../models/tableColumns';
 import { PostModel } from '../../../models/post.model';
+import { SocketIoService } from '../../../services/socket-io.service';
+import { MatAccordion } from '@angular/material';
 const MONTHS = [
   'Enero',
   'Febrero',
@@ -30,7 +32,9 @@ const MONTHS = [
   templateUrl: './general-ticket-post.component.html',
   styleUrls: ['./general-ticket-post.component.scss']
 })
-export class GeneralTicketPostComponent implements OnInit {
+export class GeneralTicketPostComponent implements OnInit, OnDestroy {
+  @ViewChild(MatAccordion)
+  accordion: MatAccordion;
   posts: PostModel[] = [];
   name = 'Angular';
   ticketId: string;
@@ -41,6 +45,8 @@ export class GeneralTicketPostComponent implements OnInit {
   columns: TableColumsModel[];
   postToSend: PostModel = {};
   userId;
+  closeAll: boolean;
+  sub;
 
   constructor(
     private postService: PostService,
@@ -48,25 +54,48 @@ export class GeneralTicketPostComponent implements OnInit {
     private router: Router,
     private ticketService: TicketService,
     private controllerMenu: ControllerMenuService,
-    private session: SessionService
+    private session: SessionService,
+    private socketIoService: SocketIoService
   ) {
     session.userSession.subscribe(user => {
       this.userId = user.userId;
       this.userType = user.type;
       this.controllerMenu.menuSettings(false, false, 'tickets', user.type);
     });
-
     this.createPosts();
+    // realtime
+    this.sub = socketIoService.onNewPost().subscribe(newPost => {
+      this.createPosts();
+    });
   }
   private createPosts() {
     this.route.params.subscribe(params => (this.ticketId = params['id']));
     this.postService.getPost(this.ticketId).subscribe(posts => {
       this.posts = posts;
+      this.seenPost(posts);
       this.ticketService.getTicketsById(this.ticketId).subscribe(t => {
         this.ticketObj = t;
         this.isLoaded = true;
       });
     });
+  }
+  seenPost(posts: PostModel[]) {
+    posts.forEach(post => {
+      if (this.userType === 'customer' && !post.isByCustomer && !post.seen) {
+        post.seen = true;
+        this.updatePost(post);
+      } else if (
+        this.userType === 'consultant' &&
+        post.isByCustomer &&
+        !post.seen
+      ) {
+        post.seen = true;
+        this.updatePost(post);
+      }
+    });
+  }
+  updatePost(post: PostModel) {
+    this.postService.updatePost(post).subscribe(p => console.log(p));
   }
 
   geDay(datePost): number {
@@ -142,5 +171,12 @@ export class GeneralTicketPostComponent implements OnInit {
     this.postService.addPost(this.postToSend).subscribe(() => {
       this.createPosts();
     });
+  }
+  ngOnDestroy(): void {
+    // Called once, before the instance is destroyed.
+    //  'implements OnDestroy' to the class.
+    if (this.sub) {
+      this.sub.unsubscribe();
+    }
   }
 }

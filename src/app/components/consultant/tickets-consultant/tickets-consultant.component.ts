@@ -9,6 +9,9 @@ import { TicketService } from '../../../services/ticket.service';
 import { GeneralAlertComponent } from '../../shared/general-alert/general-alert.component';
 import { ConsultantModel } from '../../../models/consultant.model';
 import { ConsultantService } from '../../../services/consultant.service';
+import { PostModel } from '../../../models/post.model';
+import { PostService } from '../../../services/post.service';
+import { SocketIoService } from '../../../services/socket-io.service';
 
 @Component({
   selector: 'app-tickets-consultant',
@@ -25,9 +28,11 @@ export class TicketsConsultantComponent implements OnInit, OnDestroy {
   // unsubcribe
   sub;
   sub2;
+  postNoSeen: PostModel[] = [];
   //  Rating
   statusCahnge: string;
   ticketToUpdate: TicketModel = {};
+  cosultantID;
   constructor(
     public snackBar: MatSnackBar,
     private route: ActivatedRoute,
@@ -36,7 +41,9 @@ export class TicketsConsultantComponent implements OnInit, OnDestroy {
     private sessionService: SessionService,
     public ticketService: TicketService,
     public dialog: MatDialog,
-    private consultantService: ConsultantService
+    private consultantService: ConsultantService,
+    private postService: PostService,
+    private socketIoService: SocketIoService
   ) {
     this.controllerMenu.menuSettings(false, false, 'tickets', 'consultant');
     this.route.queryParams.subscribe(params => {
@@ -100,6 +107,17 @@ export class TicketsConsultantComponent implements OnInit, OnDestroy {
       }
     ];
     this.createTable();
+    this.socketIoService.onNewPost().subscribe(post => {
+      if (this.cosultantID) {
+        this.consultantService
+          .getConsultantById(this.cosultantID)
+          .subscribe(c => {
+            if (c.tickets) {
+              this.checkPost(c.tickets);
+            }
+          });
+      }
+    });
   }
 
   ngOnInit() {}
@@ -109,6 +127,7 @@ export class TicketsConsultantComponent implements OnInit, OnDestroy {
     // carga id de consultor
     this.sub = this.sessionService.userSession.subscribe(user => {
       if (user.companyId !== undefined) {
+        this.cosultantID = user.userId;
         this.getTickets(user.userId);
       }
     });
@@ -122,6 +141,7 @@ export class TicketsConsultantComponent implements OnInit, OnDestroy {
         this.consultant = c;
         if (c.tickets) {
           this.setRows(c.tickets);
+          this.checkPost(c.tickets);
         }
       });
   }
@@ -192,6 +212,23 @@ export class TicketsConsultantComponent implements OnInit, OnDestroy {
     this.ticketService.updateTicket(this.ticketToUpdate).subscribe(res => {
       this.openSnackBar('Estatus Modificado');
       this.createTable();
+    });
+  }
+  checkPost(tickets: TicketModel[]) {
+    tickets.forEach(ticket => {
+      this.postService.getPost(ticket._id).subscribe(posts => {
+        const noSeen = posts.filter(
+          post => post.seen === false && post.isByCustomer === true
+        );
+        noSeen.forEach(n => {
+          const isFinded = this.postNoSeen.findIndex(
+            post => post.customer._id === n.customer._id
+          );
+          if (isFinded === -1) {
+            this.postNoSeen.push(n);
+          }
+        });
+      });
     });
   }
   ngOnDestroy() {
