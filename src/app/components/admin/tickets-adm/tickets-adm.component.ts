@@ -27,6 +27,7 @@ export class TicketsAdmComponent implements OnInit {
   averageRanking = 0;
   totalCost = 0;
   isLoading = false;
+  noAssingTicket = 0;
   constructor(
     public snackBar: MatSnackBar,
     private route: ActivatedRoute,
@@ -166,16 +167,21 @@ export class TicketsAdmComponent implements OnInit {
     this.isLoading = false;
   }
   sumary(data: TicketModel[]) {
+    this.noAssingTicket = 0;
     this.totalHours = 0;
     this.averageRanking = 0;
     this.totalCost = 0;
     if (data.length === 0) {
+      this.noAssingTicket = 0;
       this.totalHours = 0;
       this.averageRanking = 0;
       this.totalCost = 0;
     } else {
       let trueRanking = 0;
       data.forEach(ticket => {
+        if (!ticket.consultant) {
+          this.noAssingTicket++;
+        }
         if (ticket.hours) {
           this.totalHours += ticket.hours;
         }

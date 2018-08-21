@@ -13,6 +13,10 @@
   </ng-template>
   <!-- tabla -->
   <ng-template #table>
+    <!-- mensaje no visto -->
+    <div class="alert alert-danger" *ngIf="noAssingTicket !== 0">
+      Tiene {{noAssingTicket}} tickets sin consultor
+    </div>
     <!-- botones export -->
     <div class="toogle-btns col">
       <button mat-raised-button (click)="pdf()" id="edit" class="btn" class="secondary-color">PDF</button>
