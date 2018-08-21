@@ -77,6 +77,8 @@ export class GeneralMenuComponent {
           .subscribe(customer => {
             if (customer.logo) {
               this.avatar = customer.logo;
+            } else {
+              this.avatar = '../../../../assets/user-logo.png';
             }
             this.name = customer.name;
             this.email = customer.email;

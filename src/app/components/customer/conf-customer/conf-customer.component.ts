@@ -19,7 +19,7 @@ export class ConfCustomerComponent implements OnInit {
   errorToShow = '';
   errorToShowMat = 'Dato obligatorio';
   formData: FormData;
-  img;
+  img = '';
 
   constructor(
     private controllerMenu: ControllerMenuService,
@@ -46,15 +46,24 @@ export class ConfCustomerComponent implements OnInit {
     });
   }
   editCustomer() {
-    this.customer.logo = END_POINT.IP + this.img;
-    this.customerService.updateCustomers(this.customer).subscribe(() => {
-      this.customerService.addCustomerImg(this.formData).subscribe(res => {
+    if (this.img !== '') {
+      this.customer.logo = END_POINT.IP + this.img;
+      this.customerService.updateCustomers(this.customer).subscribe(() => {
+        this.customerService.addCustomerImg(this.formData).subscribe(res => {
+          const toast: NavigationExtras = {
+            queryParams: { res: 'editado' }
+          };
+          this.router.navigate(['tickets-customer'], toast);
+        });
+      });
+    } else {
+      this.customerService.updateCustomers(this.customer).subscribe(() => {
         const toast: NavigationExtras = {
           queryParams: { res: 'editado' }
         };
         this.router.navigate(['tickets-customer'], toast);
       });
-    });
+    }
   }
   link() {
     const input = document.getElementById('imagen1').click();
