@@ -22,8 +22,15 @@
             <th>Estado</th>
           </tr>
           <tr>
-            <td>{{ticketObj.customer.name}}</td>
-            <td>{{ticketObj.consultant.name}}</td>
+            <td *ngIf="ticketObj.customer">{{ticketObj.customer.name}}</td>
+            <td>
+              <span *ngIf="ticketObj.consultant">
+                {{ticketObj.consultant.name}}
+              </span>
+              <span *ngIf="!ticketObj.consultant">
+                Sin asignar
+              </span>
+            </td>
             <td>{{ticketObj.ranking}}</td>
             <td>{{ticketObj.status}}</td>
           </tr>

@@ -6,11 +6,17 @@
     <mat-card>
       <mat-card-title>Describa el servicio que requiere</mat-card-title>
       <div class="flex-container">
+        <!-- Title -->
+        <mat-form-field appearance="outline">
+          <mat-label>Titulo del Ticket</mat-label>
+          <input matInput [(ngModel)]="ticket.description" #description="ngModel" id="description" name="description" required>
+          <mat-error *ngIf="description.dirty || description.touched">Anotar Titulo</mat-error>
+        </mat-form-field>
         <!-- description -->
         <mat-form-field appearance="outline">
           <mat-label>Descripción o Servicio</mat-label>
-          <textarea matInput [(ngModel)]="ticket.description" #description="ngModel" id="description" name="description" required></textarea>
-          <mat-error *ngIf="description.dirty || description.touched">Anotar Servicio</mat-error>
+          <textarea matInput [(ngModel)]="post.content" #content="ngModel" id="content" name="content" required></textarea>
+          <mat-error *ngIf="content.dirty || content.touched">Anotar Descripción</mat-error>
         </mat-form-field>
       </div>
       <mat-card-actions align="end">

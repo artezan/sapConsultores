@@ -6,6 +6,8 @@ import { CustomerService } from '../../../services/customer.service';
 import { ConsultantService } from '../../../services/consultant.service';
 import { SessionService } from '../../../services/session.service';
 import { TicketService } from '../../../services/ticket.service';
+import { PostModel } from '../../../models/post.model';
+import { PostService } from '../../../services/post.service';
 
 @Component({
   selector: 'app-ticket-new-customer',
@@ -18,6 +20,7 @@ export class TicketNewCustomerComponent implements OnInit {
   errorToShow = '';
   errorToShowMat = 'Dato obligatorio';
   ticket: TicketModel = {};
+  post: PostModel = {};
   constructor(
     private controllerMenu: ControllerMenuService,
     private route: ActivatedRoute,
@@ -25,7 +28,8 @@ export class TicketNewCustomerComponent implements OnInit {
     public customerService: CustomerService,
     public consultantService: ConsultantService,
     public session: SessionService,
-    public ticketService: TicketService
+    public ticketService: TicketService,
+    private postService: PostService
   ) {
     this.controllerMenu.menuSettings(true, true, '', '');
   }
@@ -74,10 +78,16 @@ export class TicketNewCustomerComponent implements OnInit {
     this.ticket.companyId = this.companyId;
     this.ticket.hours = 0;
     this.ticketService.addTicket(this.ticket).subscribe(t => {
-      const toast: NavigationExtras = {
-        queryParams: { res: 'nuevo' }
-      };
-      this.router.navigate(['tickets-customer'], toast);
+      this.post.title = this.ticket.description;
+      this.post.ticketId = t._id;
+      this.post.isByCustomer = true;
+      this.post.customerId = this.ticket.customerId;
+      this.postService.addPost(this.post).subscribe(() => {
+        const toast: NavigationExtras = {
+          queryParams: { res: 'nuevo' }
+        };
+        this.router.navigate(['tickets-customer'], toast);
+      });
     });
   } /*
   editTicket() {

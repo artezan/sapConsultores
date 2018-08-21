@@ -27,6 +27,9 @@ export class ApiTokenInterceptor implements HttpInterceptor {
     const currentUser: UserInfo = JSON.parse(
       localStorage.getItem('userSession')
     );
+    // con BehavorSubjet
+    /* const user = this.injector.get(SessionService).userSession;
+    console.log(user.value); */
     if (currentUser) {
       const concatSession = btoa(currentUser.name + ':' + currentUser.password);
       request = request.clone({

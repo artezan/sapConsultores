@@ -97,12 +97,14 @@ export class TicketsAdmComponent implements OnInit {
       {
         name: 'Costo',
         prop: 'cost',
-        type: 'money'
+        type: 'money',
+        w: true
       },
       {
         name: 'Pagado',
         prop: 'isPay',
-        type: 'boolean'
+        type: 'boolean',
+        w: true
       },
       {
         name: 'Acciones',

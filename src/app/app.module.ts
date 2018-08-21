@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, APP_INITIALIZER } from '@angular/core';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
@@ -62,6 +62,7 @@ import { StarRatingModule } from 'angular-star-rating';
 import { ConfCustomerComponent } from './components/customer/conf-customer/conf-customer.component';
 import { ConfConsultantComponent } from './components/consultant/conf-consultant/conf-consultant.component';
 import { ApiTokenInterceptor } from './_config/api-tokens';
+import { SessionService } from './services/session.service';
 
 // npm
 
@@ -132,6 +133,12 @@ import { ApiTokenInterceptor } from './_config/api-tokens';
     {
       provide: HTTP_INTERCEPTORS,
       useClass: ApiTokenInterceptor,
+      multi: true
+    },
+    {
+      provide: APP_INITIALIZER,
+      useFactory: (check: SessionService) => () => check.deleteLocalStore(),
+      deps: [SessionService],
       multi: true
     }
   ],

@@ -15,6 +15,8 @@ export interface UserInfo {
   providedIn: 'root'
 })
 export class SessionService {
+  // store the URL so we can redirect after logging in
+  redirectUrl: string;
   userSession = new BehaviorSubject<UserInfo>({});
   userType = new BehaviorSubject('');
 
@@ -24,5 +26,17 @@ export class SessionService {
   }
   setUserType(type: string) {
     this.userType.next(type);
+  }
+  public deleteLocalStore(): Promise<any> {
+    return new Promise((resolve, reject) => {
+      // ve si hay un usuario en el localstore
+      const currentUser: UserInfo = JSON.parse(
+        localStorage.getItem('userSession')
+      );
+      if (currentUser) {
+        localStorage.removeItem('userSession');
+      }
+      return resolve(true);
+    });
   }
 }

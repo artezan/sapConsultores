@@ -33,6 +33,7 @@ export class LoginComponent implements OnInit {
     this.controllerMenu.menuSettings(true, true, '', '');
   }
   login() {
+    // local store
     const currentData: UserInfo = {
       type: this.typeOfUser,
       name: this.emailInput,
