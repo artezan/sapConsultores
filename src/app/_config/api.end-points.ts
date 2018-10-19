@@ -1,5 +1,5 @@
-const ip = 'http://31.220.52.51:3000/';
-// const ip = 'http://localhost:3000/';
+// const ip = 'http://31.220.52.51:3000/';
+const ip = 'http://localhost:3000/';
 
 const apiUrl = ip + 'api/v1/';
 
