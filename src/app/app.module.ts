@@ -58,11 +58,12 @@ import { NewCustomerAdmComponent } from './components/admin/new-customer-adm/new
 import { NewConsultantAdmComponent } from './components/admin/new-consultant-adm/new-consultant-adm.component';
 import { ListConsultantAdmComponent } from './components/admin/list-consultant-adm/list-consultant-adm.component';
 import { TicketNewCustomerComponent } from './components/customer/ticket-new-customer/ticket-new-customer.component';
-import { StarRatingModule } from 'angular-star-rating';
+// import { StarRatingModule } from 'angular-star-rating';
 import { ConfCustomerComponent } from './components/customer/conf-customer/conf-customer.component';
 import { ConfConsultantComponent } from './components/consultant/conf-consultant/conf-consultant.component';
 import { ApiTokenInterceptor } from './_config/api-tokens';
 import { SessionService } from './services/session.service';
+import { StarRatingModule } from 'angular-star-rating';
 
 // npm
 
@@ -144,4 +145,4 @@ import { SessionService } from './services/session.service';
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule {}
+export class AppModule { }
